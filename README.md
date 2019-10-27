@@ -3,14 +3,13 @@
 # Project Information
 Fall 2019
 Andres Estrada - 862136048
+
 Vincent LASTNAME - 000000000
 
 # Introduction
 "Start by giving a brief overview of what your program is able to accomplish (or what it will be able to accomplish after 
-it 
-is finished in this case) as well as any design patterns that are used and a brief overview of how the inputs are 
-ingested, 
-transformed into classes and structures, and processed."
+it is finished in this case) as well as any design patterns that are used and a brief overview of how the inputs are 
+ingested, transformed into classes and structures, and processed."
 
 # Diagram
 "Create an OMT diagram (or a small number of separate OMT diagrams depending on how complex) that shows the classes in 
