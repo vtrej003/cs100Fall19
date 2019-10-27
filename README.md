@@ -14,9 +14,8 @@ ingested, transformed into classes and structures, and processed."
 # Diagram
 "Create an OMT diagram (or a small number of separate OMT diagrams depending on how complex) that shows the classes in 
 your design and how they interact. You must use a drawing program to create your OMT diagram. OMT diagrams that are drawn 
-by hand 
-and scanned/photographed will not be allowed. Websites and online applications such as Lucidchart and Google Docs as well 
-as programs such as GIMP and Inkscape are capable of creating these diagrams. You should add the images to the *images/* 
+by hand and scanned/photographed will not be allowed. Websites and online applications such as Lucidchart and Google Docs as 
+well as programs such as GIMP and Inkscape are capable of creating these diagrams. You should add the images to the *images/* 
 folder in your assignment repository which you can then embed in your README.md using markdown."
 
 # Classes
