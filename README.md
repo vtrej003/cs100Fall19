@@ -21,26 +21,18 @@ well as programs such as GIMP and Inkscape are capable of creating these diagram
 folder in your assignment repository which you can then embed in your README.md using markdown."
 
 # Classes
-"Create descriptions of each class and/or group of classes that you plan on developing. This can be as simple as a 
-description of what each class accomplishes and how, or a pseudo code level class definition. A class group would be a 
-group of classes that all inherit from a single base class (composite classes are an example) and are therefore all 
-closely related. For class group give a description of the base class, as well as the differences between each child 
-class. Make sure it is clear how these classes interact to perform the ingestion, transformations, and processing that is
-described at a high level in the introduction."
+##Class:                ##Description:
+Base                    Our Base class is an abstract class that implements an interface evaluate(string)for our subclasses.
+Parser                  Inherits from Base and parses string of inputs and searches for command keywords and connectors. Once a 
+                        keyword/connector is found it will keep track of its element type and count it accordingly.
+Executable              Acts as the parent class for all of our executables. Passes on the evaluate() function to its  
+                        subclasses, which are the leafs of this composition design.
+Connector               Acts as the parent class for all of our executables. Passes on the evaluate() function to its  
+                        subclasses, which are the leafs of this composition design.
+              
 
 # Prototypes/Research
-"Since you are likely unfamiliar with how the functions *waitpid(), execvp() and fork()* function individually and 
-together you should create a small prototype function to test how these functions can be used together to execute small 
-commands in a separate thread. In addition to a prototype for the main system functions you should create a small 
-prototype for parsing user input into the different elements necessary for completing assignment 2. The parser does not 
-need to be bug free or fully complete (although it must compile) but should represent your investigation into determining 
-which parsing method you want to use for your assignment and the basics of a full parser (I suggest counting the number 
-of times different types of elements appear in a given input as the output of your prototype). You should include the 
-code prototype you used to do your testing in the *prototype/* directory and describe your findings and how you plan on 
-using it in your assignment in this section (note these prototypes do not need an associated CMake file to compile them). 
-Additionally, you will likely have questions about how connectors act in different situations. You should perform some 
-preliminary testing of these different situations against the normal shell and write put any notes about the results in 
-this section."
+
 # Devlopment and Testing Roadmap
 "Using the design you have set out above, create an ordered list of development tasks that need to be fulfilled before 
 the system can be completed. Note that this list will be relatively ordered, as some tasks can be completed in parallel. 
