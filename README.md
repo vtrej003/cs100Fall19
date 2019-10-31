@@ -12,6 +12,7 @@ from standard input and can execute commands such as fork, execvp, and waitpid. 
 this program's representation of commands and operators is the composite pattern.
 
 # Diagram
+![alt text](images/shellDiagram.pdf)
 
 # Classes
 **Base** - Our Base class is an abstract class that implements an interface evaluate(string)for our subclasses.  
