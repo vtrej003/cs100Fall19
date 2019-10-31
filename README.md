@@ -21,14 +21,10 @@ well as programs such as GIMP and Inkscape are capable of creating these diagram
 folder in your assignment repository which you can then embed in your README.md using markdown."
 
 # Classes
-##Class:                ##Description:
-Base                    Our Base class is an abstract class that implements an interface evaluate(string)for our subclasses.
-Parser                  Inherits from Base and parses string of inputs and searches for command keywords and connectors. Once a 
-                        keyword/connector is found it will keep track of its element type and count it accordingly.
-Executable              Acts as the parent class for all of our executables. Passes on the evaluate() function to its  
-                        subclasses, which are the leafs of this composition design.
-Connector               Acts as the parent class for all of our executables. Passes on the evaluate() function to its  
-                        subclasses, which are the leafs of this composition design.
+**Base** - Our Base class is an abstract class that implements an interface evaluate(string)for our subclasses.
+**Parser** - Inherits from Base and parses string of inputs and searches for command keywords and connectors. Once a keyword/connector is found it will keep track of its element type and count it accordingly.
+**Executable** - Acts as the parent class for all of our executables. Passes on the evaluate() function to its subclasses, which are the leafs of this composition design.
+**Connector** - Acts as the parent class for all of our executables. Passes on the evaluate() function to its subclasses, which are the leafs of this composition design.
               
 
 # Prototypes/Research
