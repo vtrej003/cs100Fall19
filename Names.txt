@@ -1,2 +1,2 @@
-Andres Estrada aestr074@student.ucr.edu 862136048
-Vincent Trejo vtrej003@student.ucr.edu 862087821
+Andres Estrada, 862136048, aestr074@student.ucr.edu
+Vincent Trejo, 862087821,vtrej003@student.ucr.edu
