@@ -30,7 +30,9 @@ are the leafs of this composition design.
 are the leafs of this composition design.
 
 # Prototypes/Research
-
+- The **&&** connector will act as an evaluater that executes both executables on either side of it. E.g. echo hello && echo world will print "hello world".
+- The **||** connector will pass over false executables and only execute on an executable that is true and return an error on any false executable, if any, that it passes over. E.g. hello || echo world will print "error world", echo hello || world will print "hello".
+- The **;** connector will pass over any executable, whether it is false or true. E.g. echo hello; world will print "hello error".
 # Devlopment and Testing Roadmap
 "Using the design you have set out above, create an ordered list of development tasks that need to be fulfilled before 
 the system can be completed. Note that this list will be relatively ordered, as some tasks can be completed in parallel. 
