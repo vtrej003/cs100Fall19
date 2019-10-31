@@ -31,18 +31,11 @@ error on any false executable, if any, that it passes over. E.g. hello || echo w
 - The **;** connector will pass over any executable, whether it is false or true. E.g. echo hello; world will print 
 "hello error".  
 # Devlopment and Testing Roadmap
-"Using the design you have set out above, create an ordered list of development tasks that need to be fulfilled before 
-the system can be completed. Note that this list will be relatively ordered, as some tasks can be completed in parallel. 
-This list should include not only primary development tasks, that is building of classes and function, but also should 
-include creating both unit and integration tests. For each item in your list, you should create a GitHub issue and assign 
-it to the person who is planning on completing it. Note that these assignments will not be final as some tasks will be 
-more difficult than expected and others will be easier and additional tasks will need to be completed as your design 
-evolves. This will simply serve as a plan of action for how the work will be split between partners. Finally, you should 
-use markdown to create a link between the development and testing roadmap task and the associated issue.
-When you create your design document, do not think only about the specifications in current assignment but also think of 
-ways that this type of program is likely to be extended and make sure your design is well positioned for these changes. 
-This is an important exercise in software construction, as successful projects usually have new functions added to them 
-and old functions updated and modified."
+- [Create classes for the connectors.](https://github.com/cs100/assignment-andres_vincent_cs_100_assignment/issues/2)
+- [Create integration tests for connector classes.](https://github.com/cs100/assignment-andres_vincent_cs_100_assignment/issues/6)
+- [Create Unit Test.](https://github.com/cs100/assignment-andres_vincent_cs_100_assignment/issues/4)
+- [Create classes for the executables.](https://github.com/cs100/assignment-andres_vincent_cs_100_assignment/issues/3)
+- [Create integration tests for the executable classes.](https://github.com/cs100/assignment-andres_vincent_cs_100_assignment/issues/5)
 
 ### Submission
 "Commit any images you create and code prototypes to the proper directories and commit the updates to your README.md to 
