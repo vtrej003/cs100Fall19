@@ -12,7 +12,7 @@ from standard input and can execute commands such as fork, execvp, and waitpid. 
 this program's representation of commands and operators is the composite pattern.
 
 # Diagram
-![Shell Diagram Image Link](images/shellDiagram.pdf)
+![Shell Diagram Image Link](https://github.com/cs100/assignment-andres_vincent_cs_100_assignment/blob/master/images/ShellDiagram.png)
 # Classes
 **Base** - Our Base class is an abstract class that implements an interface evaluate(string)for our subclasses.  
 **Parser** - Inherits from Base and parses string of inputs and searches for command keywords and connectors. Once a 
