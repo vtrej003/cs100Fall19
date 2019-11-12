@@ -1,2 +1,5 @@
-
-#includes "../header/command.h"
+class Command
+{
+    public:
+        virtual void execute();
+};
