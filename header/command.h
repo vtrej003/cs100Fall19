@@ -1,1 +1,5 @@
-//command base composition
+class Box
+{
+    public:
+        virtual void execute()
+}
