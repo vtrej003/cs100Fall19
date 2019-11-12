@@ -1,10 +1,7 @@
-#ifndef __PARSER__
-#define __PARSER__
+#include <iostream>
+#include <string>
+#include <stdio.h>
+#include <vector>
+std::string parser(std::string qToParse);
 
-class Parser
-{
-    public:
-        Parser();
-        //needs to grab input
-        //put do shet
-};
+
