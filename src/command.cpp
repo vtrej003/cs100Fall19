@@ -1,5 +1,5 @@
-class Command
-{
-    public:
-        virtual void execute();
+#include "../header/command.h"
+
+Command::Command(){
 };
+
