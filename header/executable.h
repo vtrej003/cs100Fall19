@@ -7,6 +7,7 @@ class Executable : Command
 {
     public:
         Executable(std::string);
+        Executable(std::string, std::string);
         virtual void execute();
         virtual std::string print();
     protected:
