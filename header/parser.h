@@ -2,6 +2,14 @@
 #include <string>
 #include <stdio.h>
 #include <vector>
-std::string parser(std::string qToParse);
+//td::string parser(std::string qToParse);
+class Parser()
+{
+    public::
+        Parser();
+        Parcer(Command*)
+        Parcer(Command*, string)
 
+        
+}
 
