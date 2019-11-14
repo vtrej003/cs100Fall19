@@ -1,5 +1,5 @@
-#ifndef __SYSCALL_H__
-#define __SYSCALL_H__
+#ifndef __SYSTEM_CALL_H__
+#define __SYSTEM_CALL_H__
 
 /*headers for fork, waitpid, execvp*/
 #include <sys/types.h> //lib from fork
@@ -12,18 +12,18 @@
 #include <iostream>
 #include <string>
 
-class SysCall(char[])
+class SysCall()
 {
     public:
         SysCall();
-        SysCall()(char[]);
+        SysCall(Command*);
     
         void execute(char[]);
         std::string getChildPid();
     
     private:
-	char *const execArgs[] = {"/bin/ls", "-l", NULL};
+	//char *const execArgs[] = {"/bin/ls", "-l", NULL};
 	
     }
 }
-#endif //SYSCALL_H_
+#endif //__SYSTEM_CALL_H_
