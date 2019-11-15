@@ -2,24 +2,20 @@
 
 Executable::Executable(std::string a)
 {
-        char* args[3];
-        std::string ls = "ls";
-        std::string arglist = "-l";
-        args[0] = (char*)ls.c_str();
-        args[1] = (char*)arglist.c_str();
-        args[2] = NULL;
-        execvp(args[0], args);
+    execName = a;
+    argList = NULL;// might work might not
+}
 
-         = a;
+Executable::Executable(std::string exec, std::string arg)
+{
+    execName = exec;
+    argList = arg;
 }
 
 virtual void Executable::execute()
 {
-    
-}
-
-virtual std::string And::print()
-{
+    //shot in the dark but on the spot strtok typecast
+    execvp((char*)execName.c_str(),{(char*)argList.c_str(), NULL});
 
 }
 
