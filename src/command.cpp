@@ -1,5 +1,7 @@
 #include "../header/command.h"
 
-Command::Command(){
-};
+Command::Command(){}
 
+void Command::execute(){}
+
+std::string Command::print(){}

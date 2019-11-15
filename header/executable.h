@@ -3,13 +3,17 @@
 
 #include "command.h"
 
-class Executable : Command
+class Executable : public Command
 {
     public:
         Executable(std::string);
         Executable(std::string, std::string);
+        
         virtual void execute();
         virtual std::string print();
     protected:
-        std::string name;
-}
+        std::string execName;
+        std::string argList;
+        char* args[3];
+};
+#endif

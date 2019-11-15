@@ -1,36 +1,26 @@
-#pragma once
-#ifndef __ADD_TEST_HPP__
-#define __ADD_TEST_HPP__
-
 #include "gtest/gtest.h"
-#include "NegThreeOpMock.hpp"
-#include "ZeroOpMock.hpp"
-#include "MockOpPosFour.hpp"
-#include "/home/csmajs/aestr074/lab-05-strategy-pattern-vincent_andres_lab_5/ops/add.hpp"
+#include "../header/executable.h"
 
-TEST(AddTest, Add_OpOp_Eval) {
-    NegThreeOpMock* mockNegThree = new NegThreeOpMock();
-    MockOpPosFour* mockPosFour = new MockOpPosFour();
-    Add* test = new Add(mockNegThree, mockPosFour);
-    std::cout << test->stringify() + "\n";
-    EXPECT_EQ(test->evaluate(), 1);
+TEST(MyExDeathTest, execFuncTest) {
+    //ASSERT_DEATH({
+        Command* lsCommand = new Executable("ls", "-l");
+        ASSERT_DEATH({
+        lsCommand->execute();
+        }, "error on line .* of execFuncTest()");
 }
-TEST(AddTest, Add_Nested_Eval) {
-    NegThreeOpMock* mockNegThree = new NegThreeOpMock();
-    MockOpPosFour* mockPosFour = new MockOpPosFour();
-    Add* mockAdd = new Add(mockNegThree,mockPosFour);
-    std::cout << "mockAdd Created\n";
-    Add* test = new Add(mockAdd,mockPosFour);
-    std::cout << test->stringify() + "\n";
-    EXPECT_EQ(test->evaluate(), 5);
+    
+//TEST(MyExeDeathTest, executeCall) {
+//    ASSERT_DEATH({int n = 5; ExecuteCall(&n);}, "Error on line .* of Foo()");
+//   }
+    
+TEST(ExSucDeathTest, execFunNormalExit){
+    Command* lsCommand = new Executable("ls", "-l");
+    //lsCommand->execute();
+    EXPECT_EXIT(lsCommand->execute(), ::testing::ExitedWithCode(0), "Success");           }
+  
+TEST(ExFailDeathTest, KillMyself){
+    Command* lsCommand = new Executable("ls", "-l");
+    //lsCommand->execute();
+    EXPECT_EXIT(lsCommand->execute(), ::testing::KilledBySignal(SIGKILL), "Sending myself unblockable signal");
 }
-TEST(AddTest, Add_OP_Zero_Eval) {
-    NegThreeOpMock* mockNegThree = new NegThreeOpMock();
-    ZeroOpMock* mockZero = new ZeroOpMock();
-    Add* test = new Add(mockNegThree,mockZero);
-    std::cout << "mockAdd Created\n";
-    std::cout << test->stringify() + "\n";
-    EXPECT_EQ(test->evaluate(), -3);
-}
-#endif //__ADD_TEST_HPP__
 
