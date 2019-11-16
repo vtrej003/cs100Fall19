@@ -1,15 +1,16 @@
+#ifndef __PARSER_H__
+#define __PARSER_H__
+
 #include <iostream>
 #include <string>
-#include <stdio.h>
+//#include <stdio.h>
 #include <vector>
-//td::string parser(std::string qToParse);
-class Parser()
-{
-    public::
-        Parser();
-        Parcer(Command*)
-        Parcer(Command*, string)
+class Parser{
+    private:
+        std::string strToParse;
+    public:
+        Parser(std::string);
+	std::string parse();
+};
 
-        
-}
-
+#endif //__PARSER_H__

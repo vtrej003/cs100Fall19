@@ -6,7 +6,7 @@
 class Command
 {
     public:
-        virtual void execute();
+        virtual void execute(std::string);
         virtual std::string print();
 }
 #endif //__COMMAND_H__

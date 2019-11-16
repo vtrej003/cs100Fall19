@@ -1,5 +1,6 @@
 #include "gtest/gtest.h"
-//#include "../prototype/syscall_test.cpp"
+#include "parser_test.cpp"
+
 
 int main(int argc, char **argv) {
   ::testing::InitGoogleTest(&argc, argv);
