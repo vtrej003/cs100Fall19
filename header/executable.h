@@ -13,3 +13,4 @@ class Executable : Command
     protected:
         std::string name;
 }
+#endif //__EXECUTABLE_H__
