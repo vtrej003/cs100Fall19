@@ -1,4 +1,5 @@
 #include "gtest/gtest.h"
+#include "executable_test.cpp"
 #include "parser_test.cpp"
 
 

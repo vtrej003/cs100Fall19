@@ -1,21 +1,36 @@
 #include "../header/executable.h"
 
-Executable::Executable(std::string a)
+Executable::Executable(std::string exec)
 {
-    execName = a;
-    argList = NULL;// might work might not
+    execName = exec;
+    //argList = " "; // might work might not
+    args[0] = (char*)exec.c_str();
+
 }
 
 Executable::Executable(std::string exec, std::string arg)
 {
     execName = exec;
     argList = arg;
+    args[0] = (char*)exec.c_str();
+    args[1] = (char*)arg.c_str();
 }
 
-virtual void Executable::execute()
-{
+void Executable::execute()
+{  
     //shot in the dark but on the spot strtok typecast
-    execvp((char*)execName.c_str(),{(char*)argList.c_str(), NULL});
-
+    //char* args[3] = { (char*)execName.c_str(), (char*)argList.c_str(), NULL};
+    
+    if(execvp(args[0], args) == 1)
+    {
+        std::cout << "Ending executables excute call and returning exit(1)\n \n";
+        exit(EXIT_FAILURE);
+    }
 }
+
+std::string Executable::print()
+{
+    return execName;
+}
+
 
