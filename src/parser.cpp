@@ -9,10 +9,10 @@
 #include "../src/semicolon.cpp"
 #include "../src/executable.cpp"
 
-Parser::Parser(std::string str){
+Parser::Parser(std::string str, Command* CMD){
     strToParse = str;   
 }
-Command* Parser::parse(){
+void Parser::parse(){
 	std::string result;
 	std::string cmd = strToParse;
 	std::vector<std::string> listOfConnectors({ "&&", "||", ";" });
@@ -57,13 +57,13 @@ Command* Parser::parse(){
 	Command* leftExqt = new Executable(leftExec, leftArg);
 	Command* rightExqt = new Executable(rightExec, rightArg);
 	if ( connector == "&&"){
-		*Command connector = new And(leftExqt, rightExqt);
+		CMD = new And(leftExqt, rightExqt);
 	}
 	else if ( connector == "||"){
-		*Command connector = new Or(leftExqt, rightExqt);
+		CMD = new Or(leftExqt, rightExqt);
 	}	
 	else if ( connector == ";"){
-		*Command connector = new Semicolon(leftExqt, rightExqt);
+		CMD = new Semicolon(leftExqt, rightExqt);
 	}
 	std::cout << "Left Exec:" << leftExec << "\nLeft Alg:" << leftArg << std::endl;
 	std::cout << "Connector is:" << connector << std::endl;
