@@ -16,7 +16,7 @@ class Parser{
         std::string strToParse;
     public:
         Parser(std::string);
-	void parse(Command*);
+	void parse(std::vector<std::string>);
 };
 
 #endif //__PARSER_H__

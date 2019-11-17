@@ -16,12 +16,27 @@ int main(int argc, char **argv)
 {
     do
     {
-        Command* userCmd;
+        Command* userCMD;
+	std::vector<std::string*> oCMD;
         prompt();
     	Parser p(query());
-	p.parse(userCmd);
+	p.parse(oCMD);
+	std::cout << oCMD[0];	
+        Command* leftCMD = new Executable(oCMD.at(0),oCMD.at(1));
+	//std::cout<< oCMD[0] << oCMD[1] << std::endl;
+	Command* rightCMD = new Executable(oCMD.at(3),oCMD.at(4));
+	//std::cout << oCMD[3] << oCMD[4] << std::endl;
+	if (oCMD->at(2) == "&&"){
+		userCMD = new And(leftCMD, rightCMD);
+	}
+	else if (oCMD->at(2) == "||"){
+		userCMD = new Or(leftCMD, rightCMD);
+	}
+	else if (oCMD->at(2) == ";"){
+		userCMD = new Semicolon(leftCMD, rightCMD);
+        }
 	std::cout<<"Parse done.\n";
-//	userCmd->execute();
+	userCMD->execute();
     }while(true);
     return 0;
 } 
