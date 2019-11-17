@@ -3,7 +3,7 @@
 
 #include "command.h"
 
-class Semicolon : Command
+class Semicolon : public Command
 {
     public:
         Semicolon(Command*, Command*);
@@ -13,6 +13,6 @@ class Semicolon : Command
         Command* leftCommand;
         Command* rightCommand;
         
-        std::string name = ";"
-}
+        std::string name = ";";
+};
 #endif //__SEMICOLON_H__

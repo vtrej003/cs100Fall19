@@ -8,7 +8,7 @@ Or::Or(Command* lCom, Command* rCom) {
 void Or::execute() {
  pid_t childPid = fork();
  bool flagStatus = true;
- int status = -1;
+ int status = 0;
     if(childPid < 0){//Child not created{
             perror("fork");
             exit(EXIT_FAILURE);
@@ -24,7 +24,7 @@ void Or::execute() {
 
         //waitpid(childPid, &status, -1); //waits for child to catch up
  std::cout<< "Status: " << status<<std::endl;
- if ((WEXITSTATUS(status) == 0) && WIFEXITED(status)){
+ if ((WEXITSTATUS(status) != 0) && WIFEXITED(status)){
    std::cout<<"Status*: " << status << std::endl;
    std::cout<<"Executing right\n";
    rightCommand->execute();
