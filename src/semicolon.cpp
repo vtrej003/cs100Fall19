@@ -5,10 +5,11 @@ Semicolon::Semicolon(Command* lCom, Command* rCom){
     rightCommand = rCom;
 }
 
-virtual void And::execute(){
-
+ void Semicolon::execute(){
+	leftCommand->execute();
+	rightCommand->execute();
 }
 
-virtual std::string And::print(){
+ std::string Semicolon::print(){
 
 }

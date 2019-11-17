@@ -3,7 +3,7 @@
 
 #include "command.h"
 
-class Or : Command
+class Or : public Command
 {
     public:
         Or(Command*, Command*);

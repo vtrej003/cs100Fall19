@@ -1,4 +1,4 @@
-#include "../header/functions.h"
-std::string prompt() {
-	std::cout << "$"
+void prompt() {
+	std::cout << "$";
 }
+
