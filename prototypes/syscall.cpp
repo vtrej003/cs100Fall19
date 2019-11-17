@@ -12,14 +12,14 @@
 int main(int argc, char *argv[])
 {
      
-    pid_t childPid = fork();
+    pid_t childPid = fork(); //This is the pid of the new process
      
-    if(childPid < 0)//if child is done returns -1
+    if(childPid < 0) //if negative, child is not created
     {
 	perror("fork");
 	exit(EXIT_FAILURE);
     }
-    if(childPid !=  0)// child is 1 or greater -> parent is 0
+    if(childPid !=  0)// it is a parent
     {
 	std::cout << "*Parent PID: " << getpid() << std::endl;
 	std::cout << "Child PID: " << childPid << std::endl;

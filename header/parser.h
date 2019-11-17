@@ -3,14 +3,14 @@
 
 #include <iostream>
 #include <string>
-//#include <stdio.h>
 #include <vector>
+#include "command.h"
 class Parser{
     private:
         std::string strToParse;
     public:
         Parser(std::string);
-	std::string parse();
+	Command* parse();
 };
 
 #endif //__PARSER_H__
