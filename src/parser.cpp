@@ -1,18 +1,7 @@
-#include "../header/parser.h"
-#include "../header/command.h"
-#include "../header/and.h"
-#include "../header/or.h"
-#include "../header/semicolon.h"
-#include "../header/executable.h"
-#include "../src/and.cpp"
-#include "../src/or.cpp"
-#include "../src/semicolon.cpp"
-#include "../src/executable.cpp"
-
-Parser::Parser(std::string str, Command* CMD){
+Parser::Parser(std::string str){
     strToParse = str;   
 }
-void Parser::parse(){
+void Parser::parse(Command* CMD){
 	std::string result;
 	std::string cmd = strToParse;
 	std::vector<std::string> listOfConnectors({ "&&", "||", ";" });
@@ -37,7 +26,6 @@ void Parser::parse(){
 	//substring right command
 	std::size_t endOfCon = cmd.find_last_of(connectorUsed);
 	std::cout << "position of last of: " << endOfCon << std::endl;
-
 	rightCom = cmd.substr(endOfCon + 2);
 
 	//connector
@@ -56,6 +44,7 @@ void Parser::parse(){
 	rightArg = rightCom.substr(rExecEndPos);
 	Command* leftExqt = new Executable(leftExec, leftArg);
 	Command* rightExqt = new Executable(rightExec, rightArg);
+	std::cout<<"Connector is: " << connector<<std::endl;
 	if ( connector == "&&"){
 		CMD = new And(leftExqt, rightExqt);
 	}
@@ -68,7 +57,6 @@ void Parser::parse(){
 	std::cout << "Left Exec:" << leftExec << "\nLeft Alg:" << leftArg << std::endl;
 	std::cout << "Connector is:" << connector << std::endl;
 	std::cout << "Right Exec:" << rightExec << "\nRight Alg:" << rightArg << std::endl;
-	return connector;
 
 }
 
