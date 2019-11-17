@@ -8,22 +8,24 @@ And::And(Command* lCom, Command* rCom) {
 void And::execute() {
 	pid_t childPid = fork();
 	bool flagStatus = true;
-	int status;
+	int status = -1;
     if(childPid < 0){//Child not created{
             perror("fork");
             exit(EXIT_FAILURE);
     }
     else if(childPid !=  0)// this what the parent does
     {
+	waitpid(childPid, &status, 0);
 	//waitpid(childPid, NULL, -1);
         std::cout << "*Parent PID: " << getpid() << std::endl;
         std::cout << "Child PID: " << childPid << std::endl;
         std::cout << "waiting for child to catch up!\n";
+	//std::cout << "parent* calling parent" <<getppid()<<std::endl;
 
-
-        waitpid(childPid, &status, -1); //waits for child to catch up
-	std::cout<<status<<std::endl;
-	if (WEXITSTATUS(status) != 69 ){
+        //waitpid(childPid, &status, -1); //waits for child to catch up
+	std::cout<< "Status: " << status<<std::endl;
+	if ((WEXITSTATUS(status) == 0) && WIFEXITED(status)){
+		std::cout<<"Status*: " << status << std::endl;
 		std::cout<<"Executing right\n";	
 		rightCommand->execute();
 	}
@@ -41,9 +43,6 @@ void And::execute() {
 
 		std::cout<<"Executing left\n";
 		leftCommand->execute();
-		std::cout<<"left failed"<<std::endl;
-		flagStatus = false;
-		exit(69);
 	}
 	
 }

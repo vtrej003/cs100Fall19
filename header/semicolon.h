@@ -6,7 +6,7 @@
 class Semicolon : Command
 {
     public:
-        Semicolon(Command*, Command*)
+        Semicolon(Command*, Command*);
         virtual void execute();
         virtual std::string print();
     protected:

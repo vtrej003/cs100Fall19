@@ -21,11 +21,10 @@ void Executable::execute()
     //shot in the dark but on the spot strtok typecast
     //char* args[3] = { (char*)execName.c_str(), (char*)argList.c_str(), NULL};
     
-    if(execvp(args[0], args) == 1)
-    {
-        std::cout << "Ending executables excute call and returning exit(1)\n \n";
-        exit(EXIT_FAILURE);
-    }
+    execvp(args[0], args);
+    std::cout << "Ending executables excute call and returning exit(1)\n \n";
+    exit(420);
+    
 }
 
 std::string Executable::print()
