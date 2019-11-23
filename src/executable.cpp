@@ -20,7 +20,7 @@ void Executable::execute()
 {  
     //shot in the dark but on the spot strtok typecast
     //char* args[3] = { (char*)execName.c_str(), (char*)argList.c_str(), NULL};
-    
+    std::cout<<"EXECUTING...\n";    
     execvp(args[0], args);
     std::cout << "Ending executables excute call and returning exit(1)\n \n";
     exit(420);
