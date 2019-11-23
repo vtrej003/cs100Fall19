@@ -6,8 +6,8 @@
 #include "../header/or.h"
 int main()
 {
-    Command* lsCommand = new Executable("echo");
-    Command* rCom = new Executable("ls", "sdfs");
+    Command* lsCommand = new Executable("dsf");
+    Command* rCom = new Executable("ls", "-l");
     Command* theOr = new Or(lsCommand, rCom);
     theOr->execute();
 
