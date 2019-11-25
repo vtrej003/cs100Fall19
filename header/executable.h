@@ -14,6 +14,7 @@ class Executable : public Command
     protected:
         std::string execName;
         std::string argList;
+        char* cmd;
         char* args[3];
 };
 #endif
