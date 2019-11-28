@@ -14,7 +14,7 @@ Test::Test(std::string flag, std::string arg)
     args[0] = "test";
     args[1] = const_cast<char*>(flag.c_str());
     args[2] = const_cast<char*>(arg.c_str());
-    std::cout<<"This is what will be loaded as the test\n " << "executable:"<< cmd <<"\nArgument: "<< args[0] <<std::endl;
+    std::cout<<"This is what will be loaded as the test\n" << "executable:"<< cmd <<"\nflag: "<< args[1] << "\nArg:"<<args[2]<<std::endl;
 
 }
 
@@ -22,7 +22,7 @@ void Test::execute()
 {
     std::cout<<"EXECUTING...\n";
     //execvp(cmd, args);
-    std::cout<<"Inside test bitv "<<args[2]<<std::endl;
+    std::cout<<"Inside test bit "<<args[2]<<std::endl;
     if(!access((char*)args[2], F_OK)){
 		std::cout<<"The file was found.\n";
 		exit(0);
