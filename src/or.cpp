@@ -22,7 +22,7 @@ void Or::execute() {
    std::cout<<"Executing right\n";
    rightCommand->execute();
  }
- std::cout<<status<<std::endl;
+// std::cout<<status<<std::endl;
     }
     else //this is what child does
     {

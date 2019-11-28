@@ -23,31 +23,50 @@ Command* Parser::parse(std::string strToParse){
                 }
         }
 
-
+	if (connectorFound == false){
+                std::cout << "Initiating connector false\n";
                 std::size_t lExecPos = cmd.find(" ");
-		std::size_t secondSpace = cmd.find("");
+		//std::size_t secondSpace = cmd.find("");
+                exec = cmd.substr(0, lExecPos);
+                arg = cmd.substr(lExecPos + 1 );
+                std::cout<<"This is Exec and arg*:'" <<exec<<"' '"<<arg<<"'"<<std::endl;
+                leftCMD = (instantiate(exec, arg));
+                return leftCMD;
+	        }
+        /*if(connectorFound == true)*/
+        else {
+                std::cout << "initiating connector true\n";
+
+                std::size_t startOfCon = cmd.find(connector);
+                std::size_t lExecPos = cmd.find(" ");
+                exec = cmd.substr(0, lExecPos);
+                arg = cmd.substr(lExecPos+1, startOfCon-(lExecPos+2));
+
+                std::cout<<"This is Exec and arg:'"<<exec<<"' '"<<arg<<"'"<<std::endl;
+                leftCMD = (instantiate(exec, arg));
+                
+                //connectorFound = true;	
+		std::size_t startCon = cmd.find(connector);
+                rightCom = cmd.substr(startCon + connectorSize);
+		std::cout<<"Sending " <<rightCom<<" to sub-parser\n";
+		rightCMD = parse(rightCom);
+                 
+		connectedCMD = new (instantiate(leftCMD, rightCMD, connector););
+		//rightCMD = parse(rightCom);
+		return connectedCMD;		
+	}
+	/*else if (connectorFound == false){
+                std::size_t lExecPos = cmd.find(" ");
+                //std::size_t secondSpace = cmd.find("");
                 exec = cmd.substr(0, lExecPos);
                 arg = cmd.substr(lExecPos + 1 );
                 std::cout<<"This is Exec and arg*:'" <<exec<<"' '"<<arg<<"'"<<std::endl;
                 leftCMD = (instantiate(exec, arg));
                 //return leftCMD;
-          if (connectorFound == true){
-                std::size_t startOfCon = cmd.find(connector);
-                lExecPos = cmd.find(" ");
-                exec = cmd.substr(0, lExecPos);
-                arg = cmd.substr(lExecPos+1, startOfCon-(lExecPos+2));
-                std::cout<<"This is Exec and arg:'"<<exec<<"' '"<<arg<<"'"<<std::endl;
-                leftCMD = (instantiate(exec, arg));
-                //connectorFound = true;	
-		std::size_t startCon = cmd.find(connector);
-                rightCom = cmd.substr(startCon + connectorSize);
-		rightCMD = parse(rightCom);
-		connectedCMD = (instantiate(leftCMD, rightCMD, connector));
-		//rightCMD = parse(rightCom);
-		return connectedCMD;		
-	}
-	std::cout<<"Reached leaf.\n";
-	return leftCMD;
+        }*/
+
+	//std::cout<<"Reached leaf.\n";
+	//return leftCMD;
 	//else{std::cout<<"\n\nERROR IN PARSE\n\n.";}
 }
 

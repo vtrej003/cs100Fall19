@@ -8,27 +8,53 @@ Test::Test(std::string flagList)
 
 }
 
-Test::Test(std::string flag, std::string arg)
+Test::Test(std::string nFlag, std::string arg)
 {
+    flag = nFlag;
     cmd = "test";
     args[0] = "test";
-    args[1] = const_cast<char*>(flag.c_str());
-    args[2] = const_cast<char*>(arg.c_str());
-    std::cout<<"This is what will be loaded as the test\n" << "executable:"<< cmd <<"\nflag: "<< args[1] << "\nArg:"<<args[2]<<std::endl;
-
+    if (flag == "-e" || flag == "-d" || flag == "-f"){
+    	args[1] = const_cast<char*>(flag.c_str());
+    	args[2] = const_cast<char*>(arg.c_str());
+	    std::cout<<"This is what will be loaded as the test\n" << "executable:"<< cmd <<"\nflag: "<< args[1] << "\nArg:"<<args[2]<<std::endl;
+    }
+    else{
+	args[1] = const_cast<char*>(flag.c_str());
+        args[2] = const_cast<char*>(flag.c_str());
+    }
 }
 
 void Test::execute()
 {
     std::cout<<"EXECUTING...\n";
     //execvp(cmd, args);
-    std::cout<<"Inside test bit "<<args[2]<<std::endl;
-    if(!access((char*)args[2], F_OK)){
-		std::cout<<"The file was found.\n";
-		exit(0);
+    std::cout<<"Inside test bit "<<"'"<<args[1]<<"'"<<std::endl;
+    if((!access((char*)args[2], F_OK))){
+		if (flag == "-e"){
+			std::cout<<"(True)\n";
+			exit(0);
+		}
+		else if (flag == "-d"){
+			struct stat path_stat;
+			stat(args[2],&path_stat);
+			if (S_ISDIR(path_stat.st_mode) == 1){
+				std::cout<<"(True*)\n";
+			}
+			else {std::cout<<"(False*)\n";}
+			
+		}
+		else if (flag == "-f"){
+			struct stat path_stat;
+			stat(args[2],&path_stat);
+			if(S_ISREG(path_stat.st_mode) == 1){
+				std::cout<<"(True**)\n";
+			}
+			else {std::cout<<"(False**)\n";}
+		}
+		else {std::cout<<"(True)\n";}
 	}
-    else{
-	std::cout<<"File not found.\n";
+    else{ 
+	std::cout<<"(False)\n";
 	exit(1);
     }
 
