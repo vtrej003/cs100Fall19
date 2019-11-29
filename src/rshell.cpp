@@ -14,8 +14,12 @@
 //#include "../src/semicolon.cpp"
 int main(int argc, char **argv)
 {
-    do
-    {
+     //std::string destination;
+    for (int i = 1; i < argc; ++i) {
+        std::cout << argv[i] << " ";
+    }
+    //do
+    /*{
         Command* userCMD;
 	std::vector<std::string> oCMD;
         prompt();
@@ -42,6 +46,6 @@ int main(int argc, char **argv)
 	std::cout<<"Parse done.\n";
 	userCMD->execute();
 	std::cout<<"CMD EXECUTED\n";
-    }while(true);
+    }while(true);*/
     return 0;
 } 
