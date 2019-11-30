@@ -17,15 +17,20 @@
 //#include "../src/semicolon.cpp"
 int main(int argc, char **argv)
 {
+     //std::string destination;
+    for (int i = 1; i < argc; ++i) {
+        std::cout << argv[i] << " ";
+    }
     do
     {
-	Command* cmd;
+	      Command* cmd;
         std::string str = " ";
         prompt();
-    	Parser p;
-	cmd = p.parse(query());
-	std::cout<<"Input Parsed\n";
-	cmd->execute();
+    	  Parser p;
+	      cmd = p.parse(query());
+	      std::cout<<"Input Parsed\n";
+	      cmd->execute();
     }while(true);
+
     return 0;
 } 
