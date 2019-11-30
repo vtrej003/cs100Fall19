@@ -9,10 +9,29 @@ Command* Parser::parse(std::string strToParse){
 	std::string arg;//3 args
 	int connectorSize = 0;
 	bool connectorFound = false;	
-	
 	Command* leftCMD;
         Command* rightCMD;
         Command* connectedCMD;
+        std::size_t leftP;
+	//if '(' found, call parse(substr everything after '(' )
+	//if ')' found, cal parse (substr everything before ')' )
+	//
+	for (int i = 0; i < cmd.size(); i++){
+		std::cout<<"Parsing string: '"<<cmd<<"' \n";
+		if (cmd.at(i) == '('){
+			std::size_t rightP = cmd.find(')');
+			if (rightP != std::string::npos){
+				std::cout<<"Closing parenthesis found.\n";
+				std::string pStr = cmd.substr(i+1, rightP-1);
+				std::cout<<"Substring '" <<pStr<<"' made!\n";
+				leftCMD = parse(pStr);
+				cmd.erase(0, pStr.end()-rightP);
+			}
+		        
+		}
+	}
+
+
 	for (int i = 0; i < cmd.size(); i++) {
                 if (((cmd.at(i) == '&') && (cmd.at(i + 1) == '&')) || ((cmd.at(i) == '|') && (cmd.at(i + 1) == '|')) || (cmd.at(i) == ';' )){
                         connector = cmd.at(i);
