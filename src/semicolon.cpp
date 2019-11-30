@@ -6,6 +6,7 @@ Semicolon::Semicolon(Command* lCom, Command* rCom){
 }
 
  void Semicolon::execute(){
+    std::string connector = ";";
     pid_t childPid = fork();
     int status = -1;
     if(childPid < 0){//Child not created{
@@ -15,6 +16,7 @@ Semicolon::Semicolon(Command* lCom, Command* rCom){
     else if(childPid !=  0)// this what the parent does
     {
         waitpid(childPid, &status, 0);
+	Command::setConnector(connector);
         std::cout<<"Executing right\n";
         rightCommand->execute();        
     }
@@ -24,6 +26,4 @@ Semicolon::Semicolon(Command* lCom, Command* rCom){
         leftCommand->execute();
     }
 }	
-std::string Semicolon::print(){
 
-}

@@ -1,57 +1,86 @@
 #include "../header/parser.h"
-Parser::Parser(std::string str){
-    strToParse = str;   
-}
-void Parser::parse(std::vector<std::string> &result ){
+Command* Parser::parse(std::string strToParse){
 	std::string cmd = strToParse;
 	std::vector<std::string> listOfConnectors({ "&&", "||", ";" });
 	//step one: seperate from commands from connector
-	std::string leftCom, rightCom;
-        std::string connector;// 1.commands and connector
-	std::string leftExec, rightExec;//2.execs
-	std::string leftArg, rightArg;//3 args
-								  //substring left command
-	std::size_t startOfCon;
-	std::string connectorUsed;
-	bool connectorFound;
+	std::string rightCom;
+        std::string connector = "NULL";// 1.commands and connector
+	std::string exec;//2.exe
+	std::string arg;//3 args
+	int connectorSize = 0;
+	bool connectorFound = false;	
 	
+	Command* leftCMD;
+        Command* rightCMD;
+        Command* connectedCMD;
 	for (int i = 0; i < cmd.size(); i++) {
-		if (((cmd.at(i) == '&') && (cmd.at(i + 1) == '&')) || ((cmd.at(i) == '|') && (cmd.at(i + 1) == '|')) || (cmd.at(i) == ';' )){
-			startOfCon = cmd.find(cmd.at(i));
-			connectorUsed = cmd.at(startOfCon);
-			break;
-		}
+                if (((cmd.at(i) == '&') && (cmd.at(i + 1) == '&')) || ((cmd.at(i) == '|') && (cmd.at(i + 1) == '|')) || (cmd.at(i) == ';' )){
+                        connector = cmd.at(i);
+                        if(connector == "&" || connector == "|"){connectorSize = 3;}
+                        else {connectorSize = 2;}
+			connectorFound = true;
+                        break;
+                }
+        }
+        std::size_t lExecPos = cmd.find(" ");
+	std::size_t conPos = cmd.find(connector);//if a connector exists, find it pos
+        exec = cmd.substr(0, lExecPos);
+        arg = cmd.substr(lExecPos + 1, conPos-(lExecPos+2) );
+        leftCMD = (instantiate(exec, arg)); 
+        if (connectorFound == true) {
+               //std::size_t startOfCon = cmd.find(connector);
+               //std::size_t lExecPos = cmd.find(" ");
+               //exec = cmd.substr(0, lExecPos);
+               //arg = cmd.substr(lExecPos+1, startOfCon-(lExecPos+2));
+               //leftCMD = (instantiate(exec, arg));
+	        std::size_t startCon = cmd.find(connector);
+                rightCom = cmd.substr(startCon + connectorSize);
+	        rightCMD = parse(rightCom);
+		connectedCMD = (instantiate(leftCMD, rightCMD, connector));
+		return connectedCMD;		
 	}
-	leftCom = cmd.substr(0, startOfCon);
-	//substring right command
-	std::size_t endOfCon = cmd.find_last_of(connectorUsed);
-	rightCom = cmd.substr(endOfCon + 2);
-	//connector
-	connector = cmd.substr(startOfCon, endOfCon - startOfCon + 1);
-
-	//parse left exec and alg
-	std::size_t lExecPos = leftCom.find(" ");
-	leftExec = leftCom.substr(0, lExecPos);
-	leftArg = leftCom.substr(lExecPos + 1);
-	std::cout<<"This is what is loaded into leftArg:"<<leftArg<<"."<<std::endl;
-
-	//parse right exec alg
-	std::size_t rExecEndPos = rightCom.find(" ");
-	rightExec = rightCom.substr(0, rExecEndPos);
-	rightArg = rightCom.substr(rExecEndPos+1);
-	Command* leftExqt = new Executable(leftExec, leftArg);
-	Command* rightExqt = new Executable(rightExec, rightArg);
-
-	result.push_back(leftExec); 
-	result.push_back(leftArg); 
-	result.push_back(connector);
-	result.push_back(rightExec);
-	result.push_back(rightArg);
- 	std::cout<<"Displaying Vector:\n";	
-	for (int it = 0; it < result.size(); it++){
-		std::cout<<"At [" << it << "]: " << result.at(it) << std::endl;
-	
-	}
-//	return result;
+	return leftCMD;
 }
 
+Command* Parser::instantiate(std::string exec, std::string args){
+        if (exec  == "test") {
+		bool isTest = true;
+		std::cout << "We have a test object\n";
+                std::size_t endOfFlag = args.find(" ");
+                std::string flag = args.substr(0, endOfFlag);
+                std::string arg = args.substr(endOfFlag+1);
+                std::cout<<"\nFlag*:'"<<flag<<"'\narg*:'"<<arg<<"'"<<std::endl;
+                return new Executable(flag, arg, isTest);
+        }
+        else if(exec == "["){
+            std::size_t endOfTest = args.find(']');
+            if (endOfTest != std::string::npos){
+		bool isTest = true;
+                std::size_t endOfFlag = args.find(" ");
+                std::string flag = args.substr(0, endOfFlag);
+                std::string arg = args.substr(endOfFlag+1, endOfTest-(endOfFlag+2));
+		std::cout<<"\nFlag:'"<<flag<< "'\narg:'"<<arg<<"'"<<std::endl;
+                return new Executable(flag, arg, isTest);
+            }
+        }
+        
+
+        else{
+        	return new Executable(exec, args);
+        }
+}
+		
+Command* Parser::instantiate(Command* left, Command* right, std::string con){
+	if (con == "&"){
+//		std::cout<<"Instantiating an && object.\n";
+		return new And(left, right);
+	}
+	else if (con == "|"){
+//		std::cout<<"Instantiating an || object.\n";
+		return new Or(left, right);
+	}
+	else if (con == ";"){
+//		std::cout<<"Instantiating an ; object.\n";
+		return new Semicolon(left, right);
+	}
+}

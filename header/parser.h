@@ -4,19 +4,18 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include "../header/parser.h"
-#include "../header/command.h"
-#include "../header/and.h"
-#include "../header/or.h"
-#include "../header/semicolon.h"
-#include "../header/executable.h"
-
+#include "test.h"
+#include "command.h"
+#include "and.h"
+#include "or.h"
+#include "semicolon.h"
+#include "executable.h"
+class Command;
 class Parser{
-    private:
-        std::string strToParse;
     public:
-        Parser(std::string);
-	void parse(std::vector<std::string> &str);
+	Command* parse(std::string);
+	Command* instantiate (std::string, std::string);
+	Command* instantiate (Command*, Command*, std::string);
 };
 
 #endif //__PARSER_H__
