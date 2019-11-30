@@ -16,7 +16,6 @@ Test::Test(std::string nFlag, std::string arg)
     if (flag == "-e" || flag == "-d" || flag == "-f"){
     	args[1] = const_cast<char*>(flag.c_str());
     	args[2] = const_cast<char*>(arg.c_str());
-	    std::cout<<"This is what will be loaded as the test\n" << "executable:"<< cmd <<"\nflag: "<< args[1] << "\nArg:"<<args[2]<<std::endl;
     }
     else{
 	args[1] = const_cast<char*>(flag.c_str());
@@ -27,7 +26,6 @@ Test::Test(std::string nFlag, std::string arg)
 void Test::execute()
 {
     std::cout<<"EXECUTING...\n";
-    //execvp(cmd, args);
     std::cout<<"Inside test bit "<<"'"<<args[1]<<"'"<<std::endl;
     if((!access((char*)args[2], F_OK))){
 		if (flag == "-e"){
@@ -60,8 +58,4 @@ void Test::execute()
 
 }
 
-std::string Test::print()
-{
- //   return execName;
-}
 

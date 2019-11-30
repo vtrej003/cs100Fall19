@@ -7,7 +7,7 @@ class And : public Command {
 public:
 	And(Command*, Command*);
 	virtual void execute();
-	virtual std::string print();
+	//virtual void setExToken();
 protected:
 	Command* leftCommand;
 	Command* rightCommand;

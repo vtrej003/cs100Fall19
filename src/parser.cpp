@@ -22,71 +22,45 @@ Command* Parser::parse(std::string strToParse){
                         break;
                 }
         }
-
-	if (connectorFound == false){
-                std::cout << "Initiating connector false\n";
-                std::size_t lExecPos = cmd.find(" ");
-		//std::size_t secondSpace = cmd.find("");
-                exec = cmd.substr(0, lExecPos);
-                arg = cmd.substr(lExecPos + 1 );
-                std::cout<<"This is Exec and arg*:'" <<exec<<"' '"<<arg<<"'"<<std::endl;
-                leftCMD = (instantiate(exec, arg));
-                return leftCMD;
-	        }
-        /*if(connectorFound == true)*/
-        else {
-                std::cout << "initiating connector true\n";
-
-                std::size_t startOfCon = cmd.find(connector);
-                std::size_t lExecPos = cmd.find(" ");
-                exec = cmd.substr(0, lExecPos);
-                arg = cmd.substr(lExecPos+1, startOfCon-(lExecPos+2));
-
-                std::cout<<"This is Exec and arg:'"<<exec<<"' '"<<arg<<"'"<<std::endl;
-                leftCMD = (instantiate(exec, arg));
-                
-                //connectorFound = true;	
-		std::size_t startCon = cmd.find(connector);
+        std::size_t lExecPos = cmd.find(" ");
+	std::size_t conPos = cmd.find(connector);//if a connector exists, find it pos
+        exec = cmd.substr(0, lExecPos);
+        arg = cmd.substr(lExecPos + 1, conPos-(lExecPos+2) );
+        leftCMD = (instantiate(exec, arg)); 
+        if (connectorFound == true) {
+               //std::size_t startOfCon = cmd.find(connector);
+               //std::size_t lExecPos = cmd.find(" ");
+               //exec = cmd.substr(0, lExecPos);
+               //arg = cmd.substr(lExecPos+1, startOfCon-(lExecPos+2));
+               //leftCMD = (instantiate(exec, arg));
+	        std::size_t startCon = cmd.find(connector);
                 rightCom = cmd.substr(startCon + connectorSize);
-		std::cout<<"Sending " <<rightCom<<" to sub-parser\n";
-		rightCMD = parse(rightCom);
-                 
-		connectedCMD = new (instantiate(leftCMD, rightCMD, connector););
-		//rightCMD = parse(rightCom);
+	        rightCMD = parse(rightCom);
+		connectedCMD = (instantiate(leftCMD, rightCMD, connector));
 		return connectedCMD;		
 	}
-	/*else if (connectorFound == false){
-                std::size_t lExecPos = cmd.find(" ");
-                //std::size_t secondSpace = cmd.find("");
-                exec = cmd.substr(0, lExecPos);
-                arg = cmd.substr(lExecPos + 1 );
-                std::cout<<"This is Exec and arg*:'" <<exec<<"' '"<<arg<<"'"<<std::endl;
-                leftCMD = (instantiate(exec, arg));
-                //return leftCMD;
-        }*/
-
-	//std::cout<<"Reached leaf.\n";
-	//return leftCMD;
-	//else{std::cout<<"\n\nERROR IN PARSE\n\n.";}
+	return leftCMD;
 }
 
 Command* Parser::instantiate(std::string exec, std::string args){
         if (exec  == "test") {
+		bool isTest = true;
 		std::cout << "We have a test object\n";
                 std::size_t endOfFlag = args.find(" ");
                 std::string flag = args.substr(0, endOfFlag);
                 std::string arg = args.substr(endOfFlag+1);
                 std::cout<<"\nFlag*:'"<<flag<<"'\narg*:'"<<arg<<"'"<<std::endl;
-                return new Test(flag, arg);
+                return new Executable(flag, arg, isTest);
         }
         else if(exec == "["){
             std::size_t endOfTest = args.find(']');
             if (endOfTest != std::string::npos){
+		bool isTest = true;
                 std::size_t endOfFlag = args.find(" ");
                 std::string flag = args.substr(0, endOfFlag);
                 std::string arg = args.substr(endOfFlag+1, endOfTest-(endOfFlag+2));
 		std::cout<<"\nFlag:'"<<flag<< "'\narg:'"<<arg<<"'"<<std::endl;
-                return new Test(flag, arg);
+                return new Executable(flag, arg, isTest);
             }
         }
         
@@ -98,15 +72,15 @@ Command* Parser::instantiate(std::string exec, std::string args){
 		
 Command* Parser::instantiate(Command* left, Command* right, std::string con){
 	if (con == "&"){
-		std::cout<<"Instantiating an && object.\n";
+//		std::cout<<"Instantiating an && object.\n";
 		return new And(left, right);
 	}
 	else if (con == "|"){
-		std::cout<<"Instantiating an || object.\n";
+//		std::cout<<"Instantiating an || object.\n";
 		return new Or(left, right);
 	}
 	else if (con == ";"){
-		std::cout<<"Instantiating an ; object.\n";
+//		std::cout<<"Instantiating an ; object.\n";
 		return new Semicolon(left, right);
 	}
 }
