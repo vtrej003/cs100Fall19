@@ -6,11 +6,12 @@
 class Or : public Command
 {
     public:
-        Or(Command*, Command*);
+        Or(Command*, Command*, bool);
         virtual void execute();
     protected:
 	Command* leftCommand;
         Command* rightCommand;
+	bool parenFound;
         std::string name = "||";
 };
 #endif //__OR_H__

@@ -11,10 +11,10 @@
 class Command
 {
     public: 
-	static bool mExToken;//is set to true if an executable executes, set to false
-	//static bool tokenInit;		     //if it doesn't	
+	static bool mExToken;//is set to true if an executable executes, set to false		     //if it doesn't	
 	static bool mParenToken; // is set to true if a parenthesis has been read, false otherwise
-	static std::string mConnector;//Keeps track of what the current composite is;
+	static std::string mConnector;//Keeps track of what the current composite is;i
+	static bool parenToken;
     //public:
         Command();
         virtual void execute() = 0;
