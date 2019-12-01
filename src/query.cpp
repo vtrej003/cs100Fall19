@@ -2,15 +2,13 @@
 #include <string>
 std::string query(){
         bool syntax = false;
-        std::string connectorList("|| && ;");
 	std::string input;
 	
-        do
+        do//loop until successful syntax input
         {
-            str.clear();
             std::getline(std::cin, input);
         
-            syntax = paraBalanceCheck(input);
+            syntax = paraBalanceCheck(input);//syntax check
         }
         while(!syntax);
 	return input;
@@ -19,18 +17,24 @@ std::string query(){
 
 bool paraBalanceCheck(input)
 {
+/*     iterates through the input sting
+ *     increments and decrements the counter
+ *     counter is to make sure we never have 1 too many closing brackets
+ *     then it continues to call more functions at each paranthesis
+ *     to check for the previous and next elements for syntax erros*/
+
     int counter = 0;
     for(std::string::iterator it = input.begin() it! = str.end(); ++it)
     {
-        if(it == "(")
+        if(it == "(")//left bracket comparison
         {
             counter++;
-            if(paraSyntaxCheck(it) == true)
+            if(paraSyntaxCheck(it) == true)//checks the previous and last element from the current paranthesis
                 continue;
             else
                 return false;
         }
-        else if(it == ")") 
+        else if(it == ")")//if not a left para its a right
         {         
             counter--;
             if(paraSyntaxCheck(it) == true)
@@ -53,7 +57,7 @@ bool paraBalanceCheck(input)
     else
         return false;
 }
-bool paraCompare(std:string it))
+bool paraCompare(std:string it))//reusable compare function
 {
     std::string connectorList("|| && ;");
     if(it.compare(connectorList) == 0)
@@ -61,7 +65,7 @@ bool paraCompare(std:string it))
     else
         return false;
 }
-bool paraSyntaxCheck(&it)
+bool paraSyntaxCheck(&it)//this checks the previous and next elements
 {
     if(it == "("){
         if(it == it.begin())
