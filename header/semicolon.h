@@ -8,7 +8,6 @@ class Semicolon : public Command
     public:
         Semicolon(Command*, Command*);
         virtual void execute();
-        //virtual void setExToken();
     protected:
         Command* leftCommand;
         Command* rightCommand;

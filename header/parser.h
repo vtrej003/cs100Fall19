@@ -15,7 +15,7 @@ class Parser{
     public:
 	Command* parse(std::string);
 	Command* instantiate (std::string, std::string);
-	Command* instantiate (Command*, Command*, std::string);
+	Command* instantiate (Command*, Command*, std::string, bool);
 };
 
 #endif //__PARSER_H__
