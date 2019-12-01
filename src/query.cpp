@@ -1,28 +1,28 @@
 #include <iostream>
 #include <string>
 std::string query(){
-        bool syntax = false;
+        //bool syntax = false;
 	std::string input;
 	
-        do//loop until successful syntax input
-        {
+        //do//loop until successful syntax input
+        //{
             std::getline(std::cin, input);
         
-            syntax = paraBalanceCheck(input);//syntax check
-        }
-        while(!syntax);
+            //syntax = paraBalanceCheck(input);//syntax check
+        //}
+        //while(!syntax);
 	return input;
        
 }
 
-bool paraBalanceCheck(input)
-{
+//bool paraBalanceCheck(input)
+//{
 /*     iterates through the input sting
  *     increments and decrements the counter
  *     counter is to make sure we never have 1 too many closing brackets
  *     then it continues to call more functions at each paranthesis
  *     to check for the previous and next elements for syntax erros*/
-
+/*
     int counter = 0;
     for(std::string::iterator it = input.begin() it! = str.end(); ++it)
     {
@@ -96,4 +96,4 @@ bool paraSyntaxCheck(&it)//this checks the previous and next elements
                 return false;
     
     }
-} 
+} */
