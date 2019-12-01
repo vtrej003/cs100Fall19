@@ -8,7 +8,6 @@ class Semicolon : public Command
     public:
         Semicolon(Command*, Command*);
         virtual void execute();
-        virtual std::string print();
     protected:
         Command* leftCommand;
         Command* rightCommand;

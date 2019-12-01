@@ -26,6 +26,7 @@ int main(int argc, char **argv)
 	cmd = p.parse(query());
 	std::cout<<"Input Parsed\n";
 	cmd->execute();
+	//exit(420);
     }while(true);
     return 0;
 } 

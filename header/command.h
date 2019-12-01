@@ -10,16 +10,19 @@
 
 class Command
 {
-    private: 
+    public: 
 	static bool mExToken;//is set to true if an executable executes, set to false
-			     //if it doesn't	
+	//static bool tokenInit;		     //if it doesn't	
+	static bool mParenToken; // is set to true if a parenthesis has been read, false otherwise
 	static std::string mConnector;//Keeps track of what the current composite is;
-    public:
+    //public:
         Command();
         virtual void execute() = 0;
 	void setToken (bool);
 	void setConnector(std::string);
+	void setParenToken(bool);
 	bool getToken();
+	bool getParenToken();
         std::string getConnector();
 	//virtual void setExToken() = 0;
 };

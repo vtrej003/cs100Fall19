@@ -36,55 +36,58 @@ Executable::Executable(std::string nFlag, std::string arg, bool isTest){
 }
 void Executable::execute()
 {
-    std::cout<<args[2]<<std::endl;
     std::string connector = Command::getConnector();
-    bool token = Command::getToken();  
-    if(connector == ";"){
-	 if(mIsTest == true){testExecute(); mIsTest = false;}
-            else{
-                execvp(cmd, args);
-            }	
+    std::cout<<"Using connector: '" <<connector<<"'\n";
+    std::cout<<"Executable token is set to " <<mExToken<<std::endl;
+    
+    if (connector == "NULL"){
+	if (mIsTest == true){testExecute(); mIsTest = false;}
+	else{ 
+	      	//mExToken = true;
+		//Command::setToken(token);		
+		execvp(cmd, args);
+		exit(420);
+		//std::cout<<"Setting execution token to false\n";
+		//token = false;
+	}	
     }
-    if(token == true){
+    else if(connector == ";"){
+	 if(mIsTest == true){testExecute(); mIsTest = false;}
+         else{
+                execvp(cmd, args);
+         }	
+    }
+    if(mExToken == true){
+	std::cout<<"Execution token is set to true" <<"\n";
 	if (connector == "&&"){
 	    if(mIsTest == true){testExecute(); mIsTest = false;}
 	    else{    
                 execvp(cmd, args);
-	        token = false;
-	    }		
+            }		
 	}
-	else if (connector == "NULL"){
-  	   if(mIsTest == true){
-	       std::cout<<args[2]<<std::endl;	
-	       testExecute(); mIsTest = false;
-	   }
-           else{
-               execvp(cmd, args);
-               token = false;
-           }
-	} 
-	else {}// else connector is "||" and we don't execute this arg.
+	else {exit(2);}// else connector is "||" and we don't execute this arg. 2 symbolizes don't care
     }
-    else if (token == false){
-	if (connector == "&&"){} // the last executable failed and we don't want to execute
-	else if (connector == "NULL"){
+    else if ( mExToken == false){
+	std::cout<<"Execution token is false.\n";
+	if (connector == "&&"){exit(2);} // the last executable failed and we don't want to execute
+	/*else if (connector == "NULL"){
 	    if(mIsTest == true){testExecute(); mIsTest = false;}
             else{
                 execvp(cmd, args);
                 token = false;
             }
-	}
-	else {
+	}*/
+	else { // connector is ||
 	    if(mIsTest == true){testExecute(); mIsTest = false;}
             else{
                 execvp(cmd, args);
-                token = false;
+		
             }
 	}
     }
-    Command::setToken(token);
     std::cout << "Ending executable's execute call and returning exit(420)\n";
-    exit(420);
+    std::cout<<"This is the last cmd, executable and arg to load: '"<<cmd<<"' '" << args[0]<<"' '" << args[1] << "'\n";
+   
 }
 void Executable::testExecute(){
     std::cout<<"EXECUTING...\n";

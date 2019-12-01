@@ -8,7 +8,6 @@ class Or : public Command
     public:
         Or(Command*, Command*);
         virtual void execute();
-        virtual std::string print();
     protected:
 	Command* leftCommand;
         Command* rightCommand;

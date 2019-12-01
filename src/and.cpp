@@ -9,50 +9,35 @@ void And::execute() {
 	pid_t childPid = fork();
 	bool flagStatus = true;
 	int status = -1;
+	std::string connector = "&&";
 	waitpid(childPid, &status, 0);
+	//std::string connector = "&&";
     if(childPid < 0){//Child not created{
-            perror("fork");
-            exit(EXIT_FAILURE);
+        perror("fork");
+        exit(EXIT_FAILURE);
     }
     else if(childPid !=  0)// this what the parent does
     {
-        //waitpid(childPid, &status, 0);
-	//waitpid(childPid, NULL, -1);
-     //   std::cout << "*Parent PID: " << getpid() << std::endl;
-       // std::cout << "Child PID: " << childPid << std::endl;
-      //  std::cout << "waiting for child to catch up!\n";
-	//std::cout << "parent* calling parent" <<getppid()<<std::endl;
-
-        //waitpid(childPid, &status, -1); //waits for child to catch up
-	//std::cout<< "Status: " << status<<std::endl;
-	if ((WEXITSTATUS(status) == 0) && WIFEXITED(status)){
-//		std::cout<<"Status*: " << status << std::endl;
-		std::cout<<"Executing right\n";	
-		rightCommand->execute();
-	}
-	//std::cout<<status<<std::endl;
+	//waitpid(childPid, &status, 0);
+	Command::setConnector(connector);
+	if ((WEXITSTATUS(status) == 2) && WIFEXITED(status)){Command::setToken(true); }
+	else if ((WEXITSTATUS(status) != 0) && WIFEXITED(status)){Command::setToken(false);}
+	std::cout<<"Executing right\n";	
+	rightCommand->execute();
+	Command::setToken(false);
+	exit(420);
     }
     else //this is what child does
     {
-  //      std::cout << "Parent PID: " << getppid() << std::endl; //childPID looks at parentPID -> getppid()
-    //    std::cout << "*Child PID: " << getpid() << std::endl; //currently in childPID -> getpid()
-      //  std::cout << "Child process should execute file here\n";
-        //char *const execArgs[] = {"/bin/ls", "-l", NULL};
-        //execvp("ls", execArgs);
-     //   exit(1);
-        //std::cout << "execvp error! did not ls\n";
-
-		std::cout<<"Executing left\n";
-		leftCommand->execute();
-	}
+	std::cout<<"Executing left\n";
+	leftCommand->execute();
+	std::cout<<"Executing left failed\n";
+        //Command::setToken(false);
+	exit (420);
+    }
 	
 }
 
 
-
-std::string And::print() {
-	return "Executed";
-
-}
 
 

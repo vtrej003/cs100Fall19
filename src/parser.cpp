@@ -13,6 +13,7 @@ Command* Parser::parse(std::string strToParse){
 	Command* leftCMD;
         Command* rightCMD;
         Command* connectedCMD;
+	Command* setPToken; // used to set mParToken to true or false
 	for (int i = 0; i < cmd.size(); i++) {
                 if (((cmd.at(i) == '&') && (cmd.at(i + 1) == '&')) || ((cmd.at(i) == '|') && (cmd.at(i + 1) == '|')) || (cmd.at(i) == ';' )){
                         connector = cmd.at(i);
@@ -21,6 +22,19 @@ Command* Parser::parse(std::string strToParse){
 			connectorFound = true;
                         break;
                 }
+		else if(cmd.at(i) == '('){
+			std::cout<<"Erasing left parenthesis...\n";
+			cmd.erase(cmd.begin() + i);
+			std::cout<<"This is what is left of cmd: '"<<cmd<<"'\n";
+			std::size_t rightParPos = cmd.find(')');
+			if (rightParPos != std::string::npos){
+				std::cout<<"Erasing right parenthesis...\n";
+				cmd.erase(cmd.begin() + rightParPos);
+				std::cout<<"This is what is left of cmd: '"<<cmd<<"'\nSubstringing...\n";
+				std::string pStr = cmd.substr(0);
+				std::cout<<"Substring: '"<<pStr<<"' \n";
+			}
+		}
         }
         std::size_t lExecPos = cmd.find(" ");
 	std::size_t conPos = cmd.find(connector);//if a connector exists, find it pos
