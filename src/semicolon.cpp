@@ -17,12 +17,12 @@ Semicolon::Semicolon(Command* lCom, Command* rCom){
     {
         waitpid(childPid, &status, 0);
 	Command::setConnector(connector);
-        std::cout<<"Executing right\n";
+//        std::cout<<"Executing right\n";
         rightCommand->execute();        
     }
     else //this is what child does
     {
-        std::cout<<"Executing left\n";
+  //      std::cout<<"Executing left\n";
         leftCommand->execute();
     }
 }	
