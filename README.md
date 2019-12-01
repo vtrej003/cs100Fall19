@@ -22,16 +22,22 @@ by all of its subclasses (executables and connectors). It also contains tokens t
 the next executble that has been parsed should execute. Contains a token that is used to symbolize whether a parenthesis has 
 been found or not. Also containes a string which is assigned the string name of whatever connector is currently being evaluated. 
 Contains setters and getters for these variables.  
+
 **Parser** - Parser in essentially the engine for our program. It parses user input and depending on what is read, it creates
 objects accordingly. If an executable is seen on its own, it creates an executable object. If a connecctor is read, it creates
 two executable objects and uses them to instansiate connector objects. If a test keyword is found, then it instantiates a test
 object.  
+
 **Executable** - Acts on the parsed information that is passed into it. Assigns arguments and executables appropriately and also
 contains the functionality to execute on Command objects. 
+
 **or, and, & semicolon** - Act as composites of executable objects. Determines the way that executable objects are executed.
 Contains logic that handles the order in which executable objects are acted on.
+
 **Query** - This is where the user input is handled.
+
 **rshell** - Acts as our main. This is where all our functionality is initially called.
+
 # Prototypes/Research
 - The **&&** connector will act as an evaluater that executes both executables on either side of it. E.g. echo hello && 
 echo world will print "hello world".  
