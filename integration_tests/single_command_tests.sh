@@ -1,1 +1,1 @@
-./rshell "echo we in here"
+./rshell "echo If you see this it is a success"
