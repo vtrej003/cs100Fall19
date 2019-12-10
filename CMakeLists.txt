@@ -9,7 +9,7 @@ ADD_EXECUTABLE(unit_test
 unit_tests/unit_test.cpp)
 
 ADD_EXECUTABLE(rshell
-src/test.cpp src/and.cpp src/or.cpp src/semicolon.cpp src/executable.cpp src/command.cpp src/rshell.cpp)
+ src/and.cpp src/or.cpp src/semicolon.cpp src/executable.cpp src/command.cpp src/rshell.cpp)
 
 #ADD_EXECUTABLE(syscall
 #prototypes/syscall.cpp)
