@@ -56,7 +56,7 @@ Command* Parser::parse(std::string strToParse){
 			}
 		}
         }
-	
+	std::cout<<"Connector found is '" << connector << "'\n";
 	if (parenFound == false){
         std::size_t lExecPos = cmd.find(" ");
 	std::size_t conPos = cmd.find(connector);//if a connector exists, find its pos
