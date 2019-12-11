@@ -20,8 +20,9 @@ void Pipe::execute(){
     {
 	close(pipefd[0]);
 	dup2(pipefd[1], STDOUT_FILENO);
+	std::cout<<"Executing left of pipe\n";
 	leftCommand->execute();
-        std::cout<<"Command does not exist.\n";
+        std::cout<<"Left failed.\n";
         exit (420);
     }
     childPid = fork();
@@ -29,7 +30,9 @@ void Pipe::execute(){
     if(childPid == 0){
 	close(pipefd[1]);
         dup2(pipefd[0], STDIN_FILENO);
+	std::cout<<"Executing right of pipe\n";
         rightCommand->execute();
+        std::cout<<"Right failed.\n";
 
 	
     }

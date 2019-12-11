@@ -70,14 +70,16 @@ void Executable::execute()
     if(mExToken == true){
 //	std::cout<<"Execution token is set to true" <<"\n";
 	if (connector == "&&"){
+	    std::cout<<"Exectuting && object:'"<<cmd<< "' '"<<args[0]<<"' '"<<args[1]<<"'\n";
 	    if(mIsTest == true){testExecute(); mIsTest = false;}
 	    else{    
                 execvp(cmd, args);
 		std::cout<<"Command does not exist\n";
-		exit(420);
+		exit(3);
             }		
 	}
 	else {
+	std::cout<<"Exectuting || object:'"<<cmd<< "' '"<<args[0]<<"' '"<<args[1]<<"'\n";
 	//    std::cout<<"'exit(2)'\n"; 
    	    exit(2);
 	}// else connector is "||" and we don't execute this arg. 2 symbolizes don't care
@@ -85,15 +87,17 @@ void Executable::execute()
     else if ( mExToken == false){
 //	std::cout<<"Execution token is false.\n";
 	if (connector == "&&"){
+	 std::cout<<"*Exectuting && object:'"<<cmd<< "' '"<<args[0]<<"' '"<<args[1]<<"'\n";
 	//    std::cout<<"'exit(3)'\n"; 
 	    exit(3);
 	} // the last executable failed and we don't want to execute
 	else { // connector is ||
+	std::cout<<"*Exectuting || object:'"<<cmd<< "' '"<<args[0]<<"' '"<<args[1]<<"'\n";
 	    if(mIsTest == true){testExecute(); mIsTest = false;}
             else{
                 execvp(cmd, args);
 		std::cout<<"Command does not exist\n";
-		exit (420);		
+		exit (2);		
             }
 	}
     }
