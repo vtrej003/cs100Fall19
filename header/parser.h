@@ -10,6 +10,7 @@
 #include "or.h"
 #include "semicolon.h"
 #include "executable.h"
+#include "pipe.h"
 class Command;
 class Parser{
     public:

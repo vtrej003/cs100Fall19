@@ -30,7 +30,7 @@ void And::execute() {
 	else if ((WEXITSTATUS(status) == 2) && (WIFEXITED(status)) && mParenToken == true){Command::setToken(false);}
 	else if ((WEXITSTATUS(status) == 3) && WIFEXITED(status)){Command::setToken(false);}
 	else if ((WEXITSTATUS(status) != 0) && WIFEXITED(status)){Command::setToken(false);}
-//	std::cout<<"Executing right\n";	
+	std::cout<<"Executing right\n";	
 	rightCommand->execute();
 	Command::setToken(false);
 	std::cout<<"Command does not exist.\n";
@@ -38,7 +38,7 @@ void And::execute() {
     }
     else //this is what child does
     {
-//	std::cout<<"Executing left\n";
+	std::cout<<"Executing left\n";
 	leftCommand->execute();
 //	std::cout<<"Executing left failed\n";
         //Command::setToken(false);

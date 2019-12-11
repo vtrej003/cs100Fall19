@@ -2,6 +2,7 @@
 
 Executable::Executable(std::string exec)
 {
+    std::cout<<"Making\n";
     execName = exec; 
     args[0] = (char*)exec.c_str();
 
@@ -9,12 +10,20 @@ Executable::Executable(std::string exec)
 
 Executable::Executable(std::string exec, std::string arg)
 {
-    execName = exec;
-    argList = arg;
-    cmd = const_cast<char*>(execName.c_str());
-    args[0] = const_cast<char*>(execName.c_str());
-    args[1] = const_cast<char*>(argList.c_str());
-   // args[2] = const_cast<char*>(arg.c_str());
+    if (arg == "NULL"){
+	std::cout<<"Only exec loaded\n";
+	execName = exec;
+	cmd = const_cast<char*>(execName.c_str());
+	args[0] = const_cast<char*>(execName.c_str());
+    }
+    else{
+	std::cout<<"Exec and arg loaded\n";
+    	execName = exec;
+    	argList = arg;
+    	cmd = const_cast<char*>(execName.c_str());
+    	args[0] = const_cast<char*>(execName.c_str());
+    	args[1] = const_cast<char*>(argList.c_str());
+    }
 }
 
 Executable::Executable(std::string nFlag, std::string arg, bool isTest){

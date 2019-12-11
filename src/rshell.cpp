@@ -18,18 +18,19 @@
 int main(int argc, char **argv)
 {
      //std::string destination;
-    for (int i = 1; i < argc; ++i) {
+    /*for (int i = 1; i < argc; ++i) {
         std::cout << argv[i] << " ";
-    }
+    }*/
     do
     {
 	      Command* cmd;
         std::string str = " ";
         prompt();
-    	  Parser p;
-	      cmd = p.parse(query());
-	      std::cout<<"Input Parsed\n";
-	      cmd->execute();
+        Parser p;
+	cmd = p.parse(query());
+        std::cout<<"Input Parsed\n";
+        cmd->execute();
+	std::cout<<"Command Executed.\n";
     }while(true);
 
     return 0;
