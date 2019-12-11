@@ -7,15 +7,15 @@ Command* Parser::parse(std::string strToParse){
         std::string connector = "NULL";// 1.commands and connector
 	std::string exec;//2.exe
 	std::string arg;//3 args
+	std::string leftStrCMD;
 	int connectorSize = 0;
 	bool connectorFound = false;	
         bool parenFound = false;	
 	Command* leftCMD;
         Command* rightCMD;
         Command* connectedCMD;
-	//Command* setPToken;  //Used to set pToken.
-	
-	//std::cout<<"We are now parsing: '" << cmd<<"' \n";
+	//Command* setPToken;  //Used to set pToken.	
+	std::cout<<"We are now parsing: '" << cmd<<"' \n";
 	for (int i = 0; i < cmd.size(); i++) {
                 if (((cmd.at(i) == '&') && (cmd.at(i + 1) == '&')) || ((cmd.at(i) == '|') && (cmd.at(i + 1) == '|')) || (cmd.at(i) == ';' )){
                         connector = cmd.at(i);
@@ -51,6 +51,7 @@ Command* Parser::parse(std::string strToParse){
 				leftCMD = parse(pSubstr);
 			//	std::cout<<"Erasing right parenthesis...\n";
 				cmd.erase(0, pSubstr.length());
+				std::cout<<"This is what it left of command after cutting out parenthesis: '"<< cmd <<"'\n";
 			//	std::cout<<"This is what is left of cmd: '"<<cmd<<"'\nSubstringing...\n";
 				
 			}
@@ -58,21 +59,30 @@ Command* Parser::parse(std::string strToParse){
         }
 	std::cout<<"Connector found is '" << connector << "'\n";
 	if (parenFound == false){
-        std::size_t lExecPos = cmd.find(" ");
-	std::size_t conPos = cmd.find(connector);//if a connector exists, find its pos
-        exec = cmd.substr(0, lExecPos);
-	std::cout<<"Connector Found\n";
-	arg = cmd.substr(lExecPos + 1, conPos-3);
-        //arg = cmd.substr(lExecPos + 1, conPos-(lExecPos+2) );
-	if (arg == exec || arg == ""){
-		arg = "NULL";
+        	//std::size_t lExecPos = cmd.find(" ");
+		std::size_t conPos = cmd.find(connector);//if a connector exists, find its pos
+		leftStrCMD = cmd.substr(0, conPos);
+        	//exec = cmd.substr(0, lExecPos);
+		std::size_t lExecPos = leftStrCMD.find(" ");
+		std::size_t lArgPos = cmd.find_last_of(" ");
+		arg = leftStrCMD.substr(lExecPos + 1, lArgPos);
+		exec = cmd.substr(0, lExecPos);
+		std::cout<<"Connector Found at pos: " << conPos<<std::endl;
+		std::cout<<"Exec Found at pos: " << lExecPos<<std::endl;
+		std::cout<<"Command: '" << cmd << "'\n"; 
+		//arg = cmd.substr(3 ,3);
+		//arg = cmd.substr(lExecPos + 1, conPos-(connectorSize + 1));
+        	//arg = cmd.substr(lExecPos + 1, conPos-(lExecPos+connectorSize) );
+		if (arg == exec || arg == ""){
+			std::cout<<"Loading NULL as arg\n";
+			arg = "NULL";
+		}
+		std::cout<<"This is exec: '" << exec<<"'\n";
+		std::cout<<"This is arg: '" << arg<<"'\n";
+        	leftCMD = (instantiate(exec, arg));
 	}
-	std::cout<<"This is exec: '" << exec<<"'\n";
-	std::cout<<"This is arg: '" << arg<<"'\n";
-        leftCMD = (instantiate(exec, arg));
-}
         if (connectorFound == true) {
-		std::size_t lExecPos = cmd.find(" ");
+		/*std::size_t lExecPos = cmd.find(" ");
         	std::size_t conPos = cmd.find(connector);//if a connector exists, find its pos
         	exec = cmd.substr(0, lExecPos);
         	std::cout<<"Connector Found\n";
@@ -85,7 +95,7 @@ Command* Parser::parse(std::string strToParse){
         	}
         	std::cout<<"This is exec: '" << exec<<"'\n";
         	std::cout<<"This is arg: '" << arg<<"'\n";
-        	leftCMD = (instantiate(exec, arg));
+        	leftCMD = (instantiate(exec, arg));*/
 	        std::size_t startCon = cmd.find(connector);
                 rightCom = cmd.substr(startCon + connectorSize);
 	        rightCMD = parse(rightCom);
