@@ -1,19 +1,25 @@
 #include "../header/parser.h"
 Command* Parser::parse(std::string strToParse){
 	std::string cmd = strToParse;
-	std::vector<std::string> listOfConnectors({ "&&", "||", ";" });
+	//std::vector<std::string> listOfConnectors({ "&&", "||", ";" });
+	/*redirect strings*/
+	std::string invalidChar = "& & | ; < > >> ( )";
+	std::string redirectList = "< > >>";
+	
 	//step one: seperate from commands from connector
 	std::string rightCom;
         std::string connector = "NULL";// 1.commands and connector
 	std::string exec;//2.exe
 	std::string arg;//3 args
 	std::string leftStrCMD;
+        std::string redirectCom;
 	int connectorSize = 0;
 	bool connectorFound = false;	
         bool parenFound = false;	
 	Command* leftCMD;
         Command* rightCMD;
         Command* connectedCMD;
+	Command* redirectCMD;
 	//Command* setPToken;  //Used to set pToken.	
 	std::cout<<"We are now parsing: '" << cmd<<"' \n";
 	for (int i = 0; i < cmd.size(); i++) {
@@ -38,15 +44,18 @@ Command* Parser::parse(std::string strToParse){
 			break;
 		}
                 else if(cmd.at(i) == '<' || cmd.at(i) == '>' || cmd.at(i) == ">>")
-		{
-		    std::string invalidChar = "& & | ; < > >> ( )";	
+		{	
 		    if(invalidChar.compare(cmd.at(i + 2))
 		    {
 		        exit(1);
 		    }
 		    else
 		    {
+			size_t fileEnd = cmd.find(' ', i+2);
+		        redirectCom = cmd.substr(i ,fileEnd);  
 			
+			cmd.erase(cmd.at(i), redirectCom.length());                     
+		    	
 		       // std::string fileName = cmd.find(    	
 		    
 		       //leftCMD = cmd.substr(0,i);//left side
@@ -120,7 +129,17 @@ How do you initialize a string intd::size_t lArgPos = cmd.find_last_of(" ");
 		connectedCMD = (instantiate(leftCMD, rightCMD, connector, parenFound));
 		return connectedCMD;		
 	}
-	return leftCMD;
+
+
+	if(redirectCom.empty()
+	{
+		return leftCMD;
+	}
+	else
+	{
+		//instantiate redirector class instantiate(leftCMD, redirectCom);
+		return leftCMD 
+	}
 }
 
 Command* Parser::instantiate(std::string exec, std::string args){
