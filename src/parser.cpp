@@ -37,6 +37,22 @@ Command* Parser::parse(std::string strToParse){
 			connectorFound = true;
 			break;
 		}
+                else if(cmd.at(i) == '<' || cmd.at(i) == '>' || cmd.at(i) == ">>")
+		{
+		    std::string invalidChar = "& & | ; < > >> ( )";	
+		    if(invalidChar.compare(cmd.at(i + 2))
+		    {
+		        exit(1);
+		    }
+		    else
+		    {
+			
+		       // std::string fileName = cmd.find(    	
+		    
+		       //leftCMD = cmd.substr(0,i);//left side
+                    }
+                    
+		}
 		else if(cmd.at(i) == '('){
 			//std::cout<<"Erasing left parenthesis...\n";
 			cmd.erase(cmd.begin() + i);
@@ -64,7 +80,9 @@ Command* Parser::parse(std::string strToParse){
 		leftStrCMD = cmd.substr(0, conPos);
         	//exec = cmd.substr(0, lExecPos);
 		std::size_t lExecPos = leftStrCMD.find(" ");
-		std::size_t lArgPos = cmd.find_last_of(" ");
+		s++?
+
+How do you initialize a string intd::size_t lArgPos = cmd.find_last_of(" ");
 		arg = leftStrCMD.substr(lExecPos + 1, lArgPos);
 		exec = cmd.substr(0, lExecPos);
 		std::cout<<"Connector Found at pos: " << conPos<<std::endl;
