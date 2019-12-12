@@ -43,15 +43,18 @@ Command* Parser::parse(std::string strToParse){
 			connectorFound = true;
 			break;
 		}
-                else if(cmd.at(i) == '<' || cmd.at(i) == '>' || cmd.at(i) == ">>")
-		{	
-		    if(invalidChar.compare(cmd.at(i + 2))
+                else if(cmd.at(i) == '<' || cmd.at(i) == '>')
+		{
+        	    int append =0;            
+		    if(cmd.at(i + 1) == '>')
+         		append++;
+		    if(invalidChar.compare(cmd.at( (i + append) + 2))
 		    {
 		        exit(1);
 		    }
 		    else
 		    {
-			size_t fileEnd = cmd.find(' ', i+2);
+			size_t fileEnd = cmd.find(' ', ((i + append)+2);
 		        redirectCom = cmd.substr(i ,fileEnd);  
 			
 			cmd.erase(cmd.at(i), redirectCom.length());                     
@@ -137,8 +140,8 @@ How do you initialize a string intd::size_t lArgPos = cmd.find_last_of(" ");
 	}
 	else
 	{
-		//instantiate redirector class instantiate(leftCMD, redirectCom);
-		return leftCMD 
+		redirectCMD = (instantiate(leftCMD,redirectCom));
+		return redirectCMD
 	}
 }
 
@@ -190,3 +193,20 @@ Command* Parser::instantiate(Command* left, Command* right, std::string con, boo
 		return new Pipe(left, right, pFound);
 	}
 }
+
+Command* Parser::instantiate(Command* left, std::string fileName)
+{
+    if ( redirect[0] == '<')
+    {
+         return new InputRedirect(left, fileName);
+    }
+    else if (redirect[0] == ">")
+    {
+         return new OutputRedirect(left, fileName);
+    }
+    else if (redirect[0] == ">>")
+    {
+         return new OutputAppendRedirect(left, fileName);
+    }
+}
+
