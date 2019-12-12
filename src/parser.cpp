@@ -70,33 +70,17 @@ Command* Parser::parse(std::string strToParse){
 		std::cout<<"Connector Found at pos: " << conPos<<std::endl;
 		std::cout<<"Exec Found at pos: " << lExecPos<<std::endl;
 		std::cout<<"Command: '" << cmd << "'\n"; 
-		//arg = cmd.substr(3 ,3);
-		//arg = cmd.substr(lExecPos + 1, conPos-(connectorSize + 1));
-        	//arg = cmd.substr(lExecPos + 1, conPos-(lExecPos+connectorSize) );
 		if (arg == exec || arg == ""){
 			std::cout<<"Loading NULL as arg\n";
 			arg = "NULL";
 		}
 		std::cout<<"This is exec: '" << exec<<"'\n";
 		std::cout<<"This is arg: '" << arg<<"'\n";
-        	leftCMD = (instantiate(exec, arg));
+		leftCMD = (instantiate(exec, arg));
 	}
-        if (connectorFound == true) {
-		/*std::size_t lExecPos = cmd.find(" ");
-        	std::size_t conPos = cmd.find(connector);//if a connector exists, find its pos
-        	exec = cmd.substr(0, lExecPos);
-        	std::cout<<"Connector Found\n";
-        	//arg = cmd.substr(lExecPos + 1, conPos);
-		if (arg != "NULL"){
-        		arg = cmd.substr(lExecPos + 1, conPos-(lExecPos+2) );
-		}
-        	if (arg == exec){
-        	        arg = "NULL";
-        	}
-        	std::cout<<"This is exec: '" << exec<<"'\n";
-        	std::cout<<"This is arg: '" << arg<<"'\n";
-        	leftCMD = (instantiate(exec, arg));*/
-	        std::size_t startCon = cmd.find(connector);
+        if (connectorFound == true){
+		
+		std::size_t startCon = cmd.find(connector);
                 rightCom = cmd.substr(startCon + connectorSize);
 	        rightCMD = parse(rightCom);
 		connectedCMD = (instantiate(leftCMD, rightCMD, connector, parenFound));
@@ -141,11 +125,11 @@ Command* Parser::instantiate(Command* left, Command* right, std::string con, boo
 		return new And(left, right, pFound);
 	}
 	else if (con == "||"){
-//		std::cout<<"Instantiating an || object.\n";
+		std::cout<<"Instantiating an || object.\n";
 		return new Or(left, right, pFound);
 	}
 	else if (con == ";"){
-//		std::cout<<"Instantiating an ; object.\n";
+		std::cout<<"Instantiating an ; object.\n";
 		return new Semicolon(left, right);
 	}
 	else if (con == "|"){

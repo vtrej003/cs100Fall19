@@ -2,6 +2,7 @@
 bool Command::mExToken = true;
 bool Command::mParenToken = false;
 std::string Command::mConnector = "NULL";
+int Command::mExitStatus = 255;
 Command::Command(){}
 
 void Command::execute(){}
