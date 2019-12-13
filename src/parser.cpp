@@ -49,18 +49,19 @@ Command* Parser::parse(std::string strToParse){
 		{
         	    std::cout << "redirect parser check\n";
 		    std::cout << "this is cmd now: " << cmd << std::endl; 
-		    int appendedI = i;            
+		    int appendedI = 0;            
 		    if(cmd.at(i + 1) == '>')
          		appendedI++;
                    
-		    if(invalidChar.find( cmd[appendedI + 2]) != std::string::npos )
+		    if(invalidChar.find( cmd[(i+appendedI + 2)]) != std::string::npos )
 		    {
 			std::cout << "In valid entry after redirector. now exiting\n";
 		        exit(1);
 		    }
 		    else
 		    {
-			size_t fileEndPos = cmd.find(' ', (appendedI + 2));
+			std::cout<< "i = " << i<< "\nand this is character at i:" << cmd[i]<<std::endl;
+			size_t fileEndPos = cmd.find(' ', (i + appendedI + 2 ));
 		        redirectCom = cmd.substr(i ,fileEndPos);
 			std::cout<<"FILE END POS:"<<fileEndPos<<std::endl;
 			std::cout << "this is the new redirectCom: " << redirectCom << std::endl;
@@ -94,16 +95,10 @@ Command* Parser::parse(std::string strToParse){
 	if (parenFound == false){
         	//std::size_t lExecPos = cmd.find(" ");
 		std::size_t conPos = cmd.find(connector);//if a connector exists, find its pos
-		leftStrCMD = cmd.substr(0, conPos);
-        	//exec = cmd.substr(0, lExecPos);
+		leftStrCMD = cmd.substr(0, conPos); 
 		std::size_t lExecPos = leftStrCMD.find(" ");
 		size_t lArgPos = cmd.find_last_of(" ");
-		//if (lArgPos != std::string::npos){
-			arg = leftStrCMD.substr(lExecPos + 1, lArgPos);
-		//}
-		//else{
-		//	lArgPos
-		//}*/
+		arg = leftStrCMD.substr(lExecPos + 1, lArgPos);
 		exec = cmd.substr(0, lExecPos);
 		std::cout<<"Connector Found at pos: " << conPos<<std::endl;
 		std::cout<<"Exec Found at pos: " << lExecPos<<std::endl;
