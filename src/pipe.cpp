@@ -33,7 +33,7 @@ void Pipe::execute(){
 	std::cout<<"Executing right of pipe\n";
         rightCommand->execute();
         std::cout<<"Right failed.\n";
-
+	exit (420);
 	
     }
     /*if (childPid <0){
@@ -46,7 +46,7 @@ void Pipe::execute(){
 
     waitpid(-1, &status, 0);
     waitpid(-1, &status, 0);
-
+    Command::mParenToken = parenFound;
 
 
 }
