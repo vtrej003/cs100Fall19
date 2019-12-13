@@ -22,6 +22,7 @@ class Parser{
 	Command* instantiate (std::string, std::string);
 	Command* instantiate (Command*, Command*, std::string, bool);
         Command* instantiate (Command*,std::string);//decorator redirect
+	std::string redirector(int, std::string*);
 };
 
 #endif //__PARSER_H__
