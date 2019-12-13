@@ -45,18 +45,24 @@ Executable::Executable(std::string nFlag, std::string arg, bool isTest){
 }
 void Executable::execute()
 {
+    std::cout<<"Exectuting && object:'"<<cmd<< "' '"<<args[0]<<"' '"<<args[1]<<"'\n";
     std::string connector = Command::getConnector();
-    //std::cout<<"Using connector: '" <<connector<<"'\n";
-    //std::cout<<"Executable token is set to " <<mExToken<<std::endl;
+    std::cout<<"**Using connector: '" <<connector<<"'\n";
+    std::cout<<"Executable token is set to " <<Command::mExToken<<std::endl;
     
     if (connector == "NULL"){
-	if (mIsTest == true){testExecute(); mIsTest = false;}
+	std::cout<<"Exectuting reg. object:'"<<cmd<<"'\n";
+	if (mIsTest == true){
+		testExecute();
+		mIsTest = false;
+	}
 	else{ 
-	      	//mExToken = true;
+	      	Command::mExToken = true;
 		//Command::setToken(token);		
 		execvp(cmd, args);
 		std::cout<<"Command does not exist\n";
-		exit(420);
+		//Command::mExToken = false;
+		exit(1);
 		//std::cout<<"Setting execution token to false\n";
 		//token = false;
 	}	
@@ -67,43 +73,43 @@ void Executable::execute()
               execvp(cmd, args);
          }	
     }
-    if(mExToken == true){
-//	std::cout<<"Execution token is set to true" <<"\n";
+    if(Command::mExToken == true){
+	std::cout<<"Execution token is set to true" <<"\n";
 	if (connector == "&&"){
 	    std::cout<<"Exectuting && object:'"<<cmd<< "' '"<<args[0]<<"' '"<<args[1]<<"'\n";
-	    if(mIsTest == true){testExecute(); mIsTest = false;}
+	    if(mIsTest == true){
+		testExecute(); 
+		mIsTest = false;
+	    }
 	    else{    
+		Command::mExToken = true;
                 execvp(cmd, args);
-		std::cout<<"Command does not exist\n";
-		exit(3);
+		std::cout<<"ex Command does not exist\n";
+		exit(1);
             }		
 	}
-	else {
+	else {// else connector is "||" and we don't execute this arg. 2 symbolizes don't care
 	std::cout<<"Exectuting || object:'"<<cmd<< "' '"<<args[0]<<"' '"<<args[1]<<"'\n";
-	//    std::cout<<"'exit(2)'\n"; 
-   	    exit(2);
-	}// else connector is "||" and we don't execute this arg. 2 symbolizes don't care
+   	    exit(3);
+	}
     }
-    else if ( mExToken == false){
-//	std::cout<<"Execution token is false.\n";
-	if (connector == "&&"){
+    else if ( Command::mExToken == false){
+	if (connector == "&&"){ // the last executable failed and we don't want to execute
 	 std::cout<<"*Exectuting && object:'"<<cmd<< "' '"<<args[0]<<"' '"<<args[1]<<"'\n";
-	//    std::cout<<"'exit(3)'\n"; 
-	    exit(3);
-	} // the last executable failed and we don't want to execute
+	    exit(1);
+	}
 	else { // connector is ||
 	std::cout<<"*Exectuting || object:'"<<cmd<< "' '"<<args[0]<<"' '"<<args[1]<<"'\n";
 	    if(mIsTest == true){testExecute(); mIsTest = false;}
             else{
+		Command::mExToken = true;
                 execvp(cmd, args);
 		std::cout<<"Command does not exist\n";
-		exit (2);		
+		//Command::mExToken = false;
+		exit (1);		
             }
 	}
     }
- //   std::cout << "Ending executable's execute call and returning exit(420)\n";
-   // std::cout<<"This is the last cmd, executable and arg to load: '"<<cmd<<"' '" << args[0]<<"' '" << args[1] << "'\n";
-   
 }
 void Executable::testExecute(){
  //   std::cout<<"EXECUTING...\n";
@@ -111,14 +117,14 @@ void Executable::testExecute(){
     if((!access((char*)args[2], F_OK))){
                 if (flag == "-e"){
                         std::cout<<"(True)\n";
-                        exit(0);
+                        exit(1);
                 }
                 else if (flag == "-d"){
                         struct stat path_stat;
                         stat(args[2],&path_stat);
                         if (S_ISDIR(path_stat.st_mode) == 1){
                                 std::cout<<"(True)\n";
-				exit(0);
+				exit(1);
                         }
                         else {
 			    std::cout<<"(False)\n";
@@ -131,7 +137,7 @@ void Executable::testExecute(){
                         stat(args[2],&path_stat);
                         if(S_ISREG(path_stat.st_mode) == 1){
                                 std::cout<<"(True)\n";
-                        	exit(0);
+                        	exit(1);
 			}
                         else {
 			    std::cout<<"(False)\n";
@@ -140,7 +146,7 @@ void Executable::testExecute(){
                 }
                 else {
 		    std::cout<<"(True)\n";
-		    exit(0);	
+		    exit(1);	
 		}
         }
     else{
