@@ -143,8 +143,9 @@ Command* Parser::parse(std::string strToParse){
 	}
 	else
 	{
-		sttd::string fileName::cout << "returning a decorated execubatle\n";
+		std::cout << "returning a decorated execubatle\n";
 		redirectCMD = (instantiate(leftCMD, redirectCom));
+                redirectCom.clear();
 		return redirectCMD;
 	}
 }
