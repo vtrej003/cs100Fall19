@@ -1,6 +1,6 @@
 #include "../header/outputRedirect.h"
 
-OutputRedirect::OutputRedirect(Command* com, std::string fileName) : IoRedirect(com, (char*)fileName.c_str())
+OutputRedirect::OutputRedirect(Command* com, std::string fileName) : IoRedirect(com, (char*) fileName.c_str())
 {
     
 }
@@ -23,5 +23,6 @@ void OutputRedirect::execute()
         //might want to close();
         com->execute();
     }
-    
+    //exit(0);
+    close(fdout);
 }

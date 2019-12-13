@@ -186,6 +186,7 @@ Command* Parser::instantiate(Command* left, Command* right, std::string con, boo
 Command* Parser::instantiate(Command* left, std::string redirectCom)
 {
 	std::cout << "this is the instantiate of redirectors\n";
+	std::cout<< "Instantiating redirectCom: '" <<redirectCom<<"'\n";
     if ( redirectCom[0] == '>' && redirectCom[1] == '>')
     {	
         redirectCom.erase(0,2);	
@@ -195,12 +196,23 @@ Command* Parser::instantiate(Command* left, std::string redirectCom)
     else if ( redirectCom[0] == '<')
     {
 	redirectCom.erase(0,1);
+	if (redirectCom[0] == ' '){
+		std::cout<<"Erasing whitespace\n";
+		redirectCom.erase(redirectCom.begin());
+	}
+	
+	std::cout << "*This is redirectCom after erase :'"<<redirectCom<<"'\n";
         return new InputRedirect(left, redirectCom);
     }
 
     else if (redirectCom[0] == '>')
     {
-	redirectCom.erase(0,1);	
+	redirectCom.erase(0,1);
+	std::cout << "This is redirectCom after erase :'"<<redirectCom<<"'\n";
+	if (redirectCom[0] == ' '){
+		std::cout<<"Erasing whitespace\n";
+                redirectCom.erase(redirectCom.begin());
+	}	
         return new OutputRedirect(left, redirectCom);
     }
     else

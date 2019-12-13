@@ -2,7 +2,7 @@
 
 Executable::Executable(std::string exec)
 {
-    std::cout<<"Making\n";
+ //   std::cout<<"Making\n";
     execName = exec; 
     args[0] = (char*)exec.c_str();
 
@@ -11,13 +11,13 @@ Executable::Executable(std::string exec)
 Executable::Executable(std::string exec, std::string arg)
 {
     if (arg == "NULL"){
-	std::cout<<"Only exec loaded\n";
+//	std::cout<<"Only exec loaded\n";
 	execName = exec;
 	cmd = const_cast<char*>(execName.c_str());
 	args[0] = const_cast<char*>(execName.c_str());
     }
     else{
-	std::cout<<"Exec and arg loaded\n";
+//	std::cout<<"Exec and arg loaded\n";
     	execName = exec;
     	argList = arg;
     	cmd = const_cast<char*>(execName.c_str());
@@ -45,13 +45,13 @@ Executable::Executable(std::string nFlag, std::string arg, bool isTest){
 }
 void Executable::execute()
 {
-    std::cout<<"Exectuting && object:'"<<cmd<< "' '"<<args[0]<<"' '"<<args[1]<<"'\n";
+ //   std::cout<<"Exectuting && object:'"<<cmd<< "' '"<<args[0]<<"' '"<<args[1]<<"'\n";
     std::string connector = Command::getConnector();
-    std::cout<<"**Using connector: '" <<connector<<"'\n";
-    std::cout<<"Executable token is set to " <<Command::mExToken<<std::endl;
+   // std::cout<<"**Using connector: '" <<connector<<"'\n";
+    //std::cout<<"Executable token is set to " <<Command::mExToken<<std::endl;
     
     if (connector == "NULL"){
-	std::cout<<"Exectuting reg. object:'"<<cmd<<"'\n";
+	//std::cout<<"Exectuting reg. object:'"<<cmd<<"'\n";
 	if (mIsTest == true){
 		testExecute();
 		mIsTest = false;
