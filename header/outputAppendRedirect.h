@@ -9,11 +9,8 @@ class OutputAppendRedirect : public IoRedirect
     public:
         OutputAppendRedirect(Command*, std::string);
         virtual void execute();
-    protected:
-        Command* com;
-}
+    //protected:
+      //  Command* com;
+//	char* fileName;
+};
 #endif //__OUTPUT_APPEND_REDIRECT__
-~                                                                                 
-~                                                                                 
-~                                                                                 
-~                                                 

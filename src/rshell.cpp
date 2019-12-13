@@ -10,6 +10,11 @@
 #include "../header/command.h"
 #include "../src/prompt.cpp"
 #include "../header/instantiator.h"
+#include "../header/ioRedirect.h"
+#include "../header/inputRedirect.h"
+#include "../header/outputRedirect.h"
+#include "../header/outputAppendRedirect.h"
+
 //#include "../src/instantiator.cpp"
 //#include "../src/and.cpp"
 //#include "../src/or.cpp"

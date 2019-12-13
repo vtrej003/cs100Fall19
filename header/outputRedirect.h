@@ -8,11 +8,8 @@ class OutputRedirect : public IoRedirect
     public:
         OutputRedirect(Command*, std::string);
         virtual void execute();
-    protected:
-        Command* com;
-}
-#endif //__OUTPUT__REDIRECT_H__
-~                                                                                 
-~                                                                                 
-~                                                                                 
-~                                                 
+   // protected:
+     //   Command* com;
+//	char* fileName;
+};
+#endif //__OUTPUT__REDIRECT_H__                     

@@ -1,9 +1,10 @@
 #include "../header/parser.h"
+
 Command* Parser::parse(std::string strToParse){
 	std::string cmd = strToParse;
 	//std::vector<std::string> listOfConnectors({ "&&", "||", ";" });
 	/*redirect strings*/
-	std::string invalidChar = "& & | ; < > >> ( )";
+	std::string invalidChar = "& | ; < > ( )";
 	std::string redirectList = "< > >>";
 	
 	//step one: seperate from commands from connector
@@ -41,34 +42,37 @@ Command* Parser::parse(std::string strToParse){
 			connector = "|";
 			connectorSize = 2;
 			connectorFound = true;
-			break;
+		break;
 		}
+/*----------------Redirect Syntax----------------------------------------*/
                 else if(cmd.at(i) == '<' || cmd.at(i) == '>')
 		{
-        	    int append =0;            
+        	    std::cout << "redirect parser check\n";
+		    std::cout << "this is cmd now: " << cmd << std::endl; 
+		    int appendedI = i;            
 		    if(cmd.at(i + 1) == '>')
-         		append++;
-		    if(invalidChar.compare(cmd.at( (i + append) + 2))
+         		appendedI++;
+                   
+		    if(invalidChar.find( cmd[appendedI + 2]) != std::string::npos )
 		    {
+			std::cout << "In valid entry after redirector. now exiting\n";
 		        exit(1);
 		    }
 		    else
 		    {
-			size_t fileEnd = cmd.find(' ', ((i + append)+2);
-		        redirectCom = cmd.substr(i ,fileEnd);  
-			
-			cmd.erase(cmd.at(i), redirectCom.length());                     
-		    	
-		       // std::string fileName = cmd.find(    	
-		    
-		       //leftCMD = cmd.substr(0,i);//left side
+			size_t fileEndPos = cmd.find(' ', (appendedI + 2));
+		        redirectCom = cmd.substr(i ,fileEndPos);
+			std::cout << "this is the new redirectCom: " << redirectCom << std::endl;
+			cmd.erase(i, redirectCom.length());             
                     }
-                    
+                std::cout << "final check before exiting redirect syntax check\n:"; 
+		std::cout << cmd << std::endl << redirectCom << std::endl;    
 		}
+/*------------------------------------------------------------------------------*/
 		else if(cmd.at(i) == '('){
 			//std::cout<<"Erasing left parenthesis...\n";
-			cmd.erase(cmd.begin() + i);
-			//std::cout<<"This is what is left of cmd: '"<<cmd<<"'\n";
+		//	std::string fileNamed.erase(cmd.begin() + i);
+	     	//std::cout<<"This is what is left of cmd: '"<<cmd<<"'\n";
 			std::size_t rightParPos = cmd.find(')');
 			if (rightParPos != std::string::npos){
 				parenFound = true;
@@ -92,9 +96,7 @@ Command* Parser::parse(std::string strToParse){
 		leftStrCMD = cmd.substr(0, conPos);
         	//exec = cmd.substr(0, lExecPos);
 		std::size_t lExecPos = leftStrCMD.find(" ");
-		s++?
-
-How do you initialize a string intd::size_t lArgPos = cmd.find_last_of(" ");
+		size_t lArgPos = cmd.find_last_of(" ");
 		arg = leftStrCMD.substr(lExecPos + 1, lArgPos);
 		exec = cmd.substr(0, lExecPos);
 		std::cout<<"Connector Found at pos: " << conPos<<std::endl;
@@ -134,14 +136,16 @@ How do you initialize a string intd::size_t lArgPos = cmd.find_last_of(" ");
 	}
 
 
-	if(redirectCom.empty()
+	if(redirectCom.empty())
 	{
+		std::cout << "returning a non decorated executable\n";
 		return leftCMD;
 	}
 	else
 	{
-		redirectCMD = (instantiate(leftCMD,redirectCom));
-		return redirectCMD
+		sttd::string fileName::cout << "returning a decorated execubatle\n";
+		redirectCMD = (instantiate(leftCMD, redirectCom));
+		return redirectCMD;
 	}
 }
 
@@ -194,19 +198,28 @@ Command* Parser::instantiate(Command* left, Command* right, std::string con, boo
 	}
 }
 
-Command* Parser::instantiate(Command* left, std::string fileName)
+Command* Parser::instantiate(Command* left, std::string redirectCom)
 {
-    if ( redirect[0] == '<')
-    {
-         return new InputRedirect(left, fileName);
+	std::cout << "this is the instantiate of redirectors\n";
+    if ( redirectCom[0] == '>' && redirectCom[1] == '>')
+    {	
+        redirectCom.erase(0,2);	
+        return new OutputAppendRedirect(left, redirectCom);
     }
-    else if (redirect[0] == ">")
+
+    else if ( redirectCom[0] == '<')
     {
-         return new OutputRedirect(left, fileName);
+	redirectCom.erase(0,1);
+        return new InputRedirect(left, redirectCom);
     }
-    else if (redirect[0] == ">>")
+
+    else if (redirectCom[0] == '>')
     {
-         return new OutputAppendRedirect(left, fileName);
+	redirectCom.erase(0,1);	
+        return new OutputRedirect(left, redirectCom);
     }
+    else
+        std::cout << "error instantiating redirect class\n";
+      
 }
 

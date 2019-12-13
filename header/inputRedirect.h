@@ -6,10 +6,11 @@
 class InputRedirect : public IoRedirect
 {
     public:
-        InputRedirect((Command*, std::string);
+        InputRedirect(Command*, std::string); 
         virtual void execute();
-    protected:
-        Command* com;)
-}
+    //protected:
+        //Command* com;
+	//char* fileName;
+};
 #endif //__INPUT_REDIRECT_H__
 
