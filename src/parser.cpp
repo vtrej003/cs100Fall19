@@ -63,7 +63,9 @@ Command* Parser::parse(std::string strToParse){
 		{
          	    appendedI++;
                 }
-		if(invalidChar.find( cmd[(i + appendedI) + 2]) != std::string::npos )	
+
+		if(invalidChar.find( cmd[(i + appendedI) + 2]) != std::string::npos )
+
 		{
 	     	    std::cout << "In valid entry after redirector. now exiting\n";
 		    exit(1);
