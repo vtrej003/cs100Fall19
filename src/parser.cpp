@@ -11,7 +11,7 @@ Command* Parser::parse(std::string strToParse){
 	std::string rightCom;
         std::string connector = "NULL";// 1.commands and connector
 	std::string exec;//2.exe
-	std::string arg;//3 args
+	std::string arg = "NULL";//3 args
 	std::string leftStrCMD;
         std::string redirectCom;
 	int connectorSize = 0;
@@ -62,6 +62,7 @@ Command* Parser::parse(std::string strToParse){
 		    {
 			size_t fileEndPos = cmd.find(' ', (appendedI + 2));
 		        redirectCom = cmd.substr(i ,fileEndPos);
+			std::cout<<"FILE END POS:"<<fileEndPos<<std::endl;
 			std::cout << "this is the new redirectCom: " << redirectCom << std::endl;
 			cmd.erase(i, redirectCom.length());             
                     }
@@ -97,12 +98,17 @@ Command* Parser::parse(std::string strToParse){
         	//exec = cmd.substr(0, lExecPos);
 		std::size_t lExecPos = leftStrCMD.find(" ");
 		size_t lArgPos = cmd.find_last_of(" ");
-		arg = leftStrCMD.substr(lExecPos + 1, lArgPos);
+		//if (lArgPos != std::string::npos){
+			arg = leftStrCMD.substr(lExecPos + 1, lArgPos);
+		//}
+		//else{
+		//	lArgPos
+		//}*/
 		exec = cmd.substr(0, lExecPos);
 		std::cout<<"Connector Found at pos: " << conPos<<std::endl;
 		std::cout<<"Exec Found at pos: " << lExecPos<<std::endl;
 		std::cout<<"Command: '" << cmd << "'\n"; 
-		if (arg == exec || arg == ""){
+		if ( arg == ""){
 			std::cout<<"Loading NULL as arg\n";
 			arg = "NULL";
 		}
@@ -190,6 +196,10 @@ Command* Parser::instantiate(Command* left, std::string redirectCom)
     if ( redirectCom[0] == '>' && redirectCom[1] == '>')
     {	
         redirectCom.erase(0,2);	
+	if (redirectCom[0] == ' '){
+                std::cout<<"Erasing whitespace\n";
+                redirectCom.erase(redirectCom.begin());
+        }
         return new OutputAppendRedirect(left, redirectCom);
     }
 
