@@ -88,7 +88,7 @@ Command* Parser::parse(std::string strToParse){
 			std::size_t rightParPos = cmd.find(')');
 			if (rightParPos != std::string::npos){
 				parenFound = true;
-				std::string pSubstr = cmd.substr(i, rightParPos);
+				std::string pSubstr = cmd.substr(i+1, rightParPos-1);
 				std::size_t lastOfSubstr = cmd.find(pSubstr.back());
 			//	std::cout<<"PARENTHESIS HAS BEEN FOUND.\n";
 			//	std::cout<<"SENDING '"<<pSubstr<< "' TO SUBPARSER...\n";
