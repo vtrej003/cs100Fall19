@@ -15,6 +15,7 @@ void OutputRedirect::execute()
  *        lseek(2), fcntl(2), etc.) to refer to the open file.*/
     if(fdout < 0)
     {
+	std::cout << "error inside outredirect call\n";
         exit(1);
     }
     else
@@ -24,5 +25,5 @@ void OutputRedirect::execute()
         com->execute();
     }
     //exit(0);
-    close(fdout);
+    //close(fdout);
 }
