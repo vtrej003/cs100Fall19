@@ -1,6 +1,6 @@
 #include <iostream>
 #include <algorithm>
-#include "../src/query.cpp"
+#include "../header/query.h"
 #include "../header/parser.h"
 #include "../src/parser.cpp"
 #include "../header/executable.h"
@@ -15,6 +15,7 @@
 #include "../header/outputRedirect.h"
 #include "../header/outputAppendRedirect.h"
 
+
 //#include "../src/instantiator.cpp"
 //#include "../src/and.cpp"
 //#include "../src/or.cpp"
@@ -28,11 +29,12 @@ int main(int argc, char **argv)
     }*/
     do
     {
-	      Command* cmd;
+	Command* cmd;
         std::string str = " ";
         prompt();
+	Query q;
         Parser p;
-	cmd = p.parse(query());
+	cmd = p.parse(q.query());
         std::cout<<"Input Parsed\n";
         cmd->execute();
 	std::cout<<"Command Executed.\n";
