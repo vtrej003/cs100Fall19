@@ -15,8 +15,10 @@ Command* Parser::parse(std::string strToParse){
 	std::string leftStrCMD;
         std::string redirectCon;
 	std::string redirectStr;
+	std::string tempCMD;
 	int connectorSize = 0;
 	int redirectPos = 0;
+	std::size_t endOfFilenamePos;
 	bool connectorFound = false;	
         bool parenFound = false;	
 	bool redirectorFound = false;
@@ -57,8 +59,7 @@ Command* Parser::parse(std::string strToParse){
 	    }
 /*----------------Redirect Syntax----------------------------------------*/
             else if(cmd.at(i) == '<' || cmd.at(i) == '>')
-	    {
-		
+	    {	
 		redirectorFound = true;
                 std::cout << "redirect parser check\n";
 		std::cout << "this is cmd now: " << cmd << std::endl;
@@ -73,10 +74,11 @@ Command* Parser::parse(std::string strToParse){
 			appendedI++;
 		    }
                 }
-
+		connector = redirectCon;
+		connectorSize = connector.size()+1;
 		redirectPos = i + appendedI;
 		break;	
-	    }
+	   }
 /*------------------------------------------------------------------------------*/
 	    else if(cmd.at(i) == '(')
 	    {
@@ -86,7 +88,7 @@ Command* Parser::parse(std::string strToParse){
 			std::size_t rightParPos = cmd.find(')');
 			if (rightParPos != std::string::npos){
 				parenFound = true;
-				std::string pSubstr = cmd.substr(i, rightParPos);
+				std::string pSubstr = cmd.substr(i+1, rightParPos-1);
 				std::size_t lastOfSubstr = cmd.find(pSubstr.back());
 			//	std::cout<<"PARENTHESIS HAS BEEN FOUND.\n";
 			//	std::cout<<"SENDING '"<<pSubstr<< "' TO SUBPARSER...\n";
@@ -97,14 +99,14 @@ Command* Parser::parse(std::string strToParse){
 			//	std::cout<<"This is what is left of cmd: '"<<cmd<<"'\nSubstringing...\n";
 				
 			}
-	    }
+	   }
   }
 	std::cout<<"Connector found is '" << connector << "'\n";
-	if (parenFound == false)
-	{
+
+	  if (parenFound == false){
         	
 		std::size_t conPos = cmd.find(connector);//if a connector exists, find its pos
-		
+
 		leftStrCMD = cmd.substr(0, conPos);
 		if (redirectorFound == true)
        		{
@@ -121,6 +123,7 @@ Command* Parser::parse(std::string strToParse){
                     {
 			leftStrCMD += ' ';
 			lArgPos = leftStrCMD.find_last_of(' ');
+
 		    }   
 		    std::cout << "This is the leftStrCMD '" <<leftStrCMD <<"'\n";		
 		    arg = leftStrCMD.substr(lExecPos + 1, lArgPos);
@@ -149,6 +152,7 @@ Command* Parser::parse(std::string strToParse){
 	        }
 		//single command
 		return leftCMD;
+
 }
 }
 Command* Parser::instantiate(std::string exec, std::string args){
@@ -200,46 +204,7 @@ Command* Parser::instantiate(Command* left, Command* right, std::string con, boo
 	}
 }
 
-/*Command* Parser::instantiateRedirect(std::string Com)
-{
-   std::cout << "this is the instantiate of redirectors\n";
-	std::cout<< "Instantiating redirectCom: '" <<redirectCom<<"'\n";
-    if ( redirectCom[0] == '>' && redirectCom[1] == '>')
-    {	
-        redirectCom.erase(0,2);	
-	if (redirectCom[0] == ' '){
-                std::cout<<"Erasing whitespace\n";
-                redirectCom.erase(redirectCom.begin());
-        }
-        return new OutputAppendRedirect(left, redirectCom);
-    }
 
-    else if ( redirectCom[0] == '<')
-    {
-	redirectCom.erase(0,1);
-	if (redirectCom[0] == ' '){
-		std::cout<<"Erasing whitespace\n";
-		redirectCom.erase(redirectCom.begin());
-	}
-	
-	std::cout << "*This is redirectCom after erase :'"<<redirectCom<<"'\n";
-        return new InputRedirect(left, redirectCom);
-    }
-
-    else if (redirectCom[0] == '>')
-    {
-	redirectCom.erase(0,1);
-	std::cout << "This is redirectCom after erase :'"<<redirectCom<<"'\n";
-	if (redirectCom[0] == ' '){
-		std::cout<<"Erasing whitespace\n";
-                redirectCom.erase(redirectCom.begin());
-	}	
-        return new OutputRedirect(left, redirectCom);
-    }
-    else
-        std::cout << "error instantiating redirect class\n";
-      
-}*/
 
 Command* Parser::instantiateRedirect(std::string cmd)
 {
@@ -325,10 +290,12 @@ if (arg == " " || arg == "")
        std::cout << "innerFilePos" << inputRedirectPos << "\nthis outerPos:"<< outputRedirectPos << std::endl;          
   
        com = new Executable(exec, arg);
+
         redirectCom = new OutputRedirect(com, innerFile);
         return new InputRedirect(redirectCom, outerFile);
 
     }
 
+
 }
-  
+ 

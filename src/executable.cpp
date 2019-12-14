@@ -10,14 +10,15 @@ Executable::Executable(std::string exec)
 
 Executable::Executable(std::string exec, std::string arg)
 {
+    std::cout<<"Arg inside executable is: "<<arg<<std::endl;
     if (arg == "NULL"){
-//	std::cout<<"Only exec loaded\n";
+	std::cout<<"Only exec loaded\n";
 	execName = exec;
 	cmd = const_cast<char*>(execName.c_str());
 	args[0] = const_cast<char*>(execName.c_str());
     }
     else{
-//	std::cout<<"Exec and arg loaded\n";
+	std::cout<<"Exec and arg loaded\n";
     	execName = exec;
     	argList = arg;
     	cmd = const_cast<char*>(execName.c_str());
@@ -41,30 +42,26 @@ Executable::Executable(std::string nFlag, std::string arg, bool isTest){
         args[1] = const_cast<char*>(flag.c_str());
         args[2] = const_cast<char*>(argList.c_str());
     }
-//    std::cout<<"\n\nflag:'" << args[1] <<"'\narg:'"<<args[2]<<"'\n\n";
+    std::cout<<"\n\nflag:'" << args[1] <<"'\narg:'"<<args[2]<<"'\n\n";
 }
 void Executable::execute()
 {
- //   std::cout<<"Exectuting && object:'"<<cmd<< "' '"<<args[0]<<"' '"<<args[1]<<"'\n";
+    std::cout<<"Exectuting && object:'"<<cmd<< "' '"<<args[0]<<"' '"<<args[1]<<"'\n";
     std::string connector = Command::getConnector();
-   // std::cout<<"**Using connector: '" <<connector<<"'\n";
-    //std::cout<<"Executable token is set to " <<Command::mExToken<<std::endl;
+    std::cout<<"**Using connector: '" <<connector<<"'\n";
+    std::cout<<"Executable token is set to " <<Command::mExToken<<std::endl;
     
     if (connector == "NULL"){
-	//std::cout<<"Exectuting reg. object:'"<<cmd<<"'\n";
+	std::cout<<"Exectuting reg. object:'"<<cmd<<"'\n";
 	if (mIsTest == true){
 		testExecute();
 		mIsTest = false;
 	}
 	else{ 
 	      	Command::mExToken = true;
-		//Command::setToken(token);		
 		execvp(cmd, args);
 		std::cout<<"Command does not exist\n";
-		//Command::mExToken = false;
 		exit(1);
-		//std::cout<<"Setting execution token to false\n";
-		//token = false;
 	}	
     }
     else if(connector == ";"){
@@ -117,14 +114,14 @@ void Executable::testExecute(){
     if((!access((char*)args[2], F_OK))){
                 if (flag == "-e"){
                         std::cout<<"(True)\n";
-                        exit(1);
+                        exit(0);
                 }
                 else if (flag == "-d"){
                         struct stat path_stat;
                         stat(args[2],&path_stat);
                         if (S_ISDIR(path_stat.st_mode) == 1){
                                 std::cout<<"(True)\n";
-				exit(1);
+				exit(0);
                         }
                         else {
 			    std::cout<<"(False)\n";
@@ -137,7 +134,7 @@ void Executable::testExecute(){
                         stat(args[2],&path_stat);
                         if(S_ISREG(path_stat.st_mode) == 1){
                                 std::cout<<"(True)\n";
-                        	exit(1);
+                        	exit(0);
 			}
                         else {
 			    std::cout<<"(False)\n";
@@ -146,7 +143,7 @@ void Executable::testExecute(){
                 }
                 else {
 		    std::cout<<"(True)\n";
-		    exit(1);	
+		    exit(0);	
 		}
         }
     else{
