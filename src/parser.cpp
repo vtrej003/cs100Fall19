@@ -13,11 +13,13 @@ Command* Parser::parse(std::string strToParse){
 	std::string exec;//2.exe
 	std::string arg = "NULL";//3 args
 	std::string leftStrCMD;
-        std::string redirectCom;
+        std::string redirectCon;
+	std::string redirectStr;
 	int connectorSize = 0;
 	int redirectPos = 0;
 	bool connectorFound = false;	
         bool parenFound = false;	
+	bool redirectorFound = false;
 	Command* leftCMD;
         Command* rightCMD;
         Command* connectedCMD;
@@ -56,22 +58,24 @@ Command* Parser::parse(std::string strToParse){
 /*----------------Redirect Syntax----------------------------------------*/
             else if(cmd.at(i) == '<' || cmd.at(i) == '>')
 	    {
+		
+		redirectorFound = true;
                 std::cout << "redirect parser check\n";
 		std::cout << "this is cmd now: " << cmd << std::endl;
-		int appendedI = 0;            
-		if(cmd.at(i + 1) == '>')
-		{
-         	    appendedI++;
+		int appendedI = 0; 
+		if (cmd.at(i) == '<'){
+			redirectCon = "<";
+		}           
+		else if(cmd.at(i) == '>'){
+         	    redirectCon = ">";
+		    if (cmd.at(i+1) == '>'){
+			redirectCon = ">>";
+			appendedI++;
+		    }
                 }
 
-		if(invalidChar.find( cmd[(i + appendedI) + 2]) != std::string::npos )
-
-		{
-	     	    std::cout << "In valid entry after redirector. now exiting\n";
-		    exit(1);
-		}
 		redirectPos = i + appendedI;
-		
+		break;	
 	    }
 /*------------------------------------------------------------------------------*/
 	    else if(cmd.at(i) == '(')
@@ -96,14 +100,28 @@ Command* Parser::parse(std::string strToParse){
 		}
         }
 	std::cout<<"Connector found is '" << connector << "'\n";
-	if (parenFound == false){
+	if (parenFound == false && redirectorFound == false){
         	
 		std::size_t conPos = cmd.find(connector);//if a connector exists, find its pos
+		if (redirectorFound == true){
+			redirectStr = cmd.substr(redirectPos+1);
+			if (cmd.at(redirectPos+1) == ' '){
+				redirectStr = cmd.substr(redirectPos+2);
+			}
+			std::cout<<"This is everything right after '"<<redirectCon<<"': '"<< redirectStr<<"'\n";			
+			std::size_t endOfFilenamePos = redirectStr.find(' ');
+			/*if (endOfFilenamePos == std::string::npos){
+				redirectStr+=' ';
+				std::size_t endOfFilenamePos = redirectStr.find(' ');
+				redirectStr = redirectStr.substr(0, endOfFilenamePos)
+			}*/
+			redirectStr = redirectStr.substr(0, endOfFilenamePos);
+			std::cout<<"This is the file: '"<<redirectStr<<"'\n";
+		}
 		leftStrCMD = cmd.substr(0, conPos);
 		std::size_t lExecPos = leftStrCMD.find(' ');
 		std::size_t lArgPos = leftStrCMD.find_last_of(' ');
 		if (leftStrCMD.back() != ' '){
-			std::cout<<"STEPPING IN \n";
 			leftStrCMD += ' ';
 			lArgPos = leftStrCMD.find_last_of(' ');
 		}
@@ -121,7 +139,39 @@ Command* Parser::parse(std::string strToParse){
 		std::cout<<"This is arg: '" << arg<<"'\n";
 		leftCMD = (instantiate(exec, arg));
 	}
+	if (redirectorFound == true){
+                        redirectStr = cmd.substr(redirectPos+1);
+                        if (cmd.at(redirectPos+1) == ' '){
+                                redirectStr = cmd.substr(redirectPos+2);
+                        }
+                        std::cout<<"This is everything right after '"<<redirectCon<<"': '"<< redirectStr<<"'\n";
+                        std::size_t endOfFilenamePos = redirectStr.find(' ');
+                        /*if (endOfFilenamePos == std::string::npos){
+                                redirectStr+=' ';
+                                std::size_t endOfFilenamePos = redirectStr.find(' ');
+                                redirectStr = redirectStr.substr(0, endOfFilenamePos)
+                        }*/
+                        redirectStr = redirectStr.substr(0, endOfFilenamePos);
+                        std::cout<<"This is the file: '"<<redirectStr<<"'\n";
+	}
+
+	if (redirectorFound == true){
+                        redirectStr = cmd.substr(redirectPos+1);
+                        if (cmd.at(redirectPos+1) == ' '){
+                                redirectStr = cmd.substr(redirectPos+2);
+                        }
+                        std::cout<<"This is everything right after '"<<redirectCon<<"': '"<< redirectStr<<"'\n";
+                        std::size_t endOfFilenamePos = redirectStr.find(' ');
+                        /*if (endOfFilenamePos == std::string::npos){
+ *                                 redirectStr+=' ';
+ *                                                                 std::size_t endOfFilenamePos = redirectStr.find(' ');
+ *                                                                                                 redirectStr = redirectStr.substr(0, endOfFilenamePos)
+ *                                                                                                                         }*/
+                        redirectStr = redirectStr.substr(0, endOfFilenamePos);
+                        std::cout<<"This is the file: '"<<redirectStr<<"'\n";
+                }
 	
+	}
         if (connectorFound == true){
 		std::size_t startCon = cmd.find(connector);
 		rightCom = cmd.substr(startCon + connectorSize);
@@ -132,13 +182,13 @@ Command* Parser::parse(std::string strToParse){
 	}
 
 
-	if(redirectCom.empty()){
+	if(redirectStr.empty()){
 		return leftCMD;
 	}
 	else{
 		std::cout << "returning a decorated executable\n"; 
-                redirectCMD = (instantiate(leftCMD, redirectCom));
-		redirectCom.clear();
+                redirectCMD = (instantiate(leftCMD, redirectStr));
+		redirectStr.clear();
   	  	return redirectCMD;
 	}
 }
