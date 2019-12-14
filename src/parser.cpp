@@ -61,7 +61,7 @@ Command* Parser::parse(std::string strToParse){
             else if(cmd.at(i) == '<' || cmd.at(i) == '>')
 	    {	
 		redirectorFound = true;
-                std::cout << "redirect parser check\n";
+                /*std::cout << "redirect parser check\n";
 		std::cout << "this is cmd now: " << cmd << std::endl;
 		int appendedI = 0; 
 		if (cmd.at(i) == '<'){
@@ -77,7 +77,7 @@ Command* Parser::parse(std::string strToParse){
 		connector = redirectCon;
 		connectorSize = connector.size()+1;
 		redirectPos = i + appendedI;
-		break;	
+		break;	*/
 	   }
 /*------------------------------------------------------------------------------*/
 	    else if(cmd.at(i) == '(')
