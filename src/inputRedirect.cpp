@@ -17,7 +17,8 @@ void InputRedirect::execute()
        lseek(2), fcntl(2), etc.) to refer to the open file.*/
     if(fdin < 0)
     {
-        exit(1);
+        std::cout << " error in input redirect call\n";
+	exit(1);
     }
     else
     {
