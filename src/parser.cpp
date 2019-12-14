@@ -60,25 +60,8 @@ Command* Parser::parse(std::string strToParse){
 /*----------------Redirect Syntax----------------------------------------*/
             else if(cmd.at(i) == '<' || cmd.at(i) == '>')
 	    {	
-		redirectorFound = true;
-                std::cout << "redirect parser check\n";
-		std::cout << "this is cmd now: " << cmd << std::endl;
-		int appendedI = 0; 
-		if (cmd.at(i) == '<'){
-			redirectCon = "<";
-		}           
-		else if(cmd.at(i) == '>'){
-         	    redirectCon = ">";
-		    if (cmd.at(i+1) == '>'){
-			redirectCon = ">>";
-			appendedI++;
-		    }
-                }
-		connector = redirectCon;
-		connectorSize = connector.size()+1;
-		redirectPos = i + appendedI;
-		break;	
-	   }
+		redirectorFound = true;    
+	    }
 /*------------------------------------------------------------------------------*/
 	    else if(cmd.at(i) == '(')
 	    {
@@ -103,7 +86,13 @@ Command* Parser::parse(std::string strToParse){
   }
 	std::cout<<"Connector found is '" << connector << "'\n";
 
-	  if (parenFound == false){
+	  //if ( parenFound == true)
+	  //{
+	      //
+ 	  //    leftCMD = new Parenthesis(
+	 // }
+	  if (parenFound == false)
+	  {
         	
 		std::size_t conPos = cmd.find(connector);//if a connector exists, find its pos
 
@@ -116,7 +105,7 @@ Command* Parser::parse(std::string strToParse){
 	        }
 		else
 		{
-			std::cout << " did not enter redirector\n";
+		    std::cout << " did not enter redirector\n";
 		    std::size_t lExecPos = leftStrCMD.find(' ');
 	  	    std::size_t lArgPos = leftStrCMD.find_last_of(' ');
 		    if (leftStrCMD.back() != ' ')
@@ -246,7 +235,7 @@ Command* Parser::instantiateRedirect(std::string cmd)
            std::cout<<"Loading NULL as arg\n";
            arg = "NULL";
        }
- 
+ 	std::cout << "this is exec:" << exec << "this is arg:" << arg << "\nthis is input:" << innerFile << std::endl;
        com = new Executable(exec, arg);
        return new InputRedirect(com, innerFile);
     }
@@ -257,7 +246,7 @@ else if (inputRedirectPos < outputRedirectPos)
 	
         exec = cmd.substr(0, execEndPos);
         arg = cmd.substr(execEndPos, inputRedirectPos-execEndPos);  //substr 0 to input <
-        innerFile = cmd.substr(inputRedirectPos+2,outputRedirectPos-(cmd.size()));// substr < to >
+        innerFile = cmd.substr(inputRedirectPos+2, (cmd.size() - outputRedirectPos-1));// substr < to >
         outerFile = cmd.substr(outputRedirectPos+2); //substr < to end of line
 	
         if (arg == " " || arg == "")
@@ -266,7 +255,8 @@ else if (inputRedirectPos < outputRedirectPos)
            arg = "NULL";
        }
 
-	std::cout << "innerFilePos" << inputRedirectPos << "\nthis outerPos:"<< outputRedirectPos << std::endl;	
+	      std::cout << "Exec:"<< exec <<"\narg:" << arg << "\ninnerFile:"<< innerFile << ":\nouterFile:" << outerFile << ":\nInnerPOs:"<<inputRedirectPos <<"\nthis outerPos:"<< outputRedirectPos << std::endl;
+
         com = new Executable(exec, arg);
         redirectCom = new InputRedirect(com, innerFile);
         return new OutputRedirect(redirectCom, outerFile);
@@ -278,18 +268,18 @@ else if (inputRedirectPos < outputRedirectPos)
         exec = cmd.substr(0, execEndPos);
         arg = cmd.substr(execEndPos, outputRedirectPos-execEndPos);
         
-	innerFile = cmd.substr(outputRedirectPos+2, inputRedirectPos  - (outputRedirectPos + 5));
+	innerFile = cmd.substr(outputRedirectPos+2, inputRedirectPos  - cmd.size());
         outerFile = cmd.substr( inputRedirectPos+2);
 	
-if (arg == " " || arg == "")
+       if (arg == " " || arg == "")
        {
            std::cout<<"Loading NULL as arg\n";
            arg = "NULL";
        }
 
-       std::cout << "innerFilePos" << inputRedirectPos << "\nthis outerPos:"<< outputRedirectPos << std::endl;          
+       std::cout << "Exec:"<< exec <<"\narg:" << arg << "\ninnerFile:"<< innerFile << "\nouterFile:" << outerFile << "InnerPOs:"<<inputRedirectPos <<"\nthis outerPos:"<< outputRedirectPos << std::endl;          
   
-       com = new Executable(exec, arg);
+        com = new Executable(exec, arg);
 
         redirectCom = new OutputRedirect(com, innerFile);
         return new InputRedirect(redirectCom, outerFile);
