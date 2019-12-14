@@ -60,7 +60,6 @@ Command* Parser::parse(std::string strToParse){
 /*----------------Redirect Syntax----------------------------------------*/
             else if(cmd.at(i) == '<' || cmd.at(i) == '>')
 	    {	
-
 		redirectorFound = true;    
 	    }
 /*------------------------------------------------------------------------------*/
