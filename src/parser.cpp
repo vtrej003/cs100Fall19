@@ -205,7 +205,7 @@ Command* Parser::instantiateRedirect(std::string cmd)
     Command* com;
     Command* redirectCom;
     execEndPos = cmd.find(' ');
-
+    std::cout << "This is cmd:" << cmd << std::endl;
     if(inputRedirectPos == std::string::npos)//no input redirector 
     {
         exec = cmd.substr(0, execEndPos);
