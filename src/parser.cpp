@@ -120,7 +120,7 @@ Command* Parser::parse(std::string strToParse){
 		    std::cout<<"Connector Found at pos: " << conPos<<std::endl;
 		    std::cout<<"Exec Found at pos: " << lExecPos<<std::endl;
 		    std::cout<<"Command: '" << cmd << "'\n"; 
-		    if ( arg == "")
+		    if ( arg == "" || arg == exec)
 		    {
 			std::cout<<"Loading NULL as arg\n";
 			arg = "NULL";
