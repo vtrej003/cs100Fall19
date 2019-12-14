@@ -97,18 +97,18 @@ Command* Parser::parse(std::string strToParse){
         }
 	std::cout<<"Connector found is '" << connector << "'\n";
 	if (parenFound == false){
-        	//std::size_t lExecPos = cmd.find(" ");
+        	
 		std::size_t conPos = cmd.find(connector);//if a connector exists, find its pos
 		leftStrCMD = cmd.substr(0, conPos);
-		//exec = cmd.substr(0, lExecPos);
-		std::size_t lExecPos = leftStrCMD.find(" ");
-		size_t lArgPos = leftStrCMD.find_last_of(" ");
-		//if (lArgPos != std::string::npos){
+		std::size_t lExecPos = leftStrCMD.find(' ');
+		std::size_t lArgPos = leftStrCMD.find_last_of(' ');
+		if (leftStrCMD.back() != ' '){
+			std::cout<<"STEPPING IN \n";
+			leftStrCMD += ' ';
+			lArgPos = leftStrCMD.find_last_of(' ');
+		}
+		std::cout << "This is the leftStrCMD '" <<leftStrCMD <<"'\n";		
 		arg = leftStrCMD.substr(lExecPos + 1, lArgPos);
-		//}
-		//else{
-		//	lArgPos
-		//}*/
 		exec = cmd.substr(0, lExecPos);
 		std::cout<<"Connector Found at pos: " << conPos<<std::endl;
 		std::cout<<"Exec Found at pos: " << lExecPos<<std::endl;
