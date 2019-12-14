@@ -15,8 +15,7 @@ in keyword **test** form and bracket **[]** form. This program is also capable o
 Furthermore, this program had functionality for input and output redirection using characters |, <, <<, > to represent piping, input redirection, output appended redirection, and output redirection respectively.
 
 # Diagram
-![Shell Diagram Image Link](https://github.com/cs100/assignment-andres_vincent_cs_100_assignment/blob/master/images
-/ShellDiagram.png)
+![Shell Diagram Image Link](https://github.com/cs100/assignment-andres_vincent_cs_100_assignment/blob/master/images/UML.PNG)
 # Classes
 **Command** - Our base class is an abstract class that implements virual function execute() which is inherited and implemented
 by all of its subclasses (executables and connectors). It also contains tokens that keep track of the validity of whether or not
