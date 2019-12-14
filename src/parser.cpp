@@ -162,16 +162,8 @@ Command* Parser::parse(std::string strToParse){
                         }
                         std::cout<<"This is everything right after '"<<redirectCon<<"': '"<< redirectStr<<"'\n";
                         std::size_t endOfFilenamePos = redirectStr.find(' ');
-                        /*if (endOfFilenamePos == std::string::npos){
- *                                 redirectStr+=' ';
- *                                                                 std::size_t endOfFilenamePos = redirectStr.find(' ');
- *                                                                                                 redirectStr = redirectStr.substr(0, endOfFilenamePos)
- *                                                                                                                         }*/
-                        redirectStr = redirectStr.substr(0, endOfFilenamePos);
-                        std::cout<<"This is the file: '"<<redirectStr<<"'\n";
-                }
+        }	
 	
-	}
         if (connectorFound == true){
 		std::size_t startCon = cmd.find(connector);
 		rightCom = cmd.substr(startCon + connectorSize);
