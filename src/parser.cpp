@@ -14,8 +14,8 @@ Command* Parser::parse(std::string strToParse){
 	std::string arg = "NULL";//3 args
 	std::string leftStrCMD;
         std::string redirectCom;
-	int redirectPos = 0;
 	int connectorSize = 0;
+	int redirectPos = 0;
 	bool connectorFound = false;	
         bool parenFound = false;	
 	Command* leftCMD;
@@ -100,7 +100,6 @@ Command* Parser::parse(std::string strToParse){
         	//std::size_t lExecPos = cmd.find(" ");
 		std::size_t conPos = cmd.find(connector);//if a connector exists, find its pos
 		leftStrCMD = cmd.substr(0, conPos);
-        	redirectCom = redirector(4, &leftStrCMD);
 		//exec = cmd.substr(0, lExecPos);
 		std::size_t lExecPos = leftStrCMD.find(" ");
 		size_t lArgPos = leftStrCMD.find_last_of(" ");
@@ -110,7 +109,7 @@ Command* Parser::parse(std::string strToParse){
 		//else{
 		//	lArgPos
 		//}*/
-		exec = leftStrCMD.substr(0, lExecPos);
+		exec = cmd.substr(0, lExecPos);
 		std::cout<<"Connector Found at pos: " << conPos<<std::endl;
 		std::cout<<"Exec Found at pos: " << lExecPos<<std::endl;
 		std::cout<<"Command: '" << cmd << "'\n"; 
@@ -124,47 +123,23 @@ Command* Parser::parse(std::string strToParse){
 	}
 	
         if (connectorFound == true){
-		std::cout << " this is start of the if connector Found\n";
 		std::size_t startCon = cmd.find(connector);
-		if(startCon != std::string::npos)
-		{
-		/*=====================================*/
-		    std::cout << "THIS IS BEFORE THE RIGHT ON COM SO I CAN DELTE CONNECTORS FROM CMD:" <<cmd << std::endl;
-                   //cmd.erase(startCon, );
-                    rightCom = cmd.substr(startCon + connectorSize);
-		    std::cout << "this is right COm before parsiong the right side:" << rightCom << std::endl;
-	            /*======DELETE CONNECTORES============*/
-		    rightCMD = parse(rightCom);
-		}
-		//connectedCMD = (instantiate(leftCMD, rightCMD, connector, parenFound));
-		//return connectedCMD;		
+		rightCom = cmd.substr(startCon + connectorSize);
+		rightCMD = parse(rightCom);
+		
+		connectedCMD = (instantiate(leftCMD, rightCMD, connector, parenFound));
+		return connectedCMD;		
 	}
 
 
-	if(redirectCom.empty())
-	{
-		std::cout << "returning a non decorated executable\n";
-		if(connectorFound == true){
-		    connectedCMD = (instantiate(leftCMD, rightCMD, connector, parenFound));
-		}
-		else
-		    return leftCMD;
+	if(redirectCom.empty()){
+		return leftCMD;
 	}
-	else
-	{
+	else{
 		std::cout << "returning a decorated executable\n"; 
                 redirectCMD = (instantiate(leftCMD, redirectCom));
 		redirectCom.clear();
-		if(connectorFound == true)
-		{
-		    return connectedCMD = (instantiate(redirectCMD,rightCMD, connector, parenFound));
-		}
-		else
-		{  
-		     //redirectCMD = (instantiate(leftCMD, redirectCom));
-                     //redirectCom.clear();
-	   	     return redirectCMD;
-		}
+  	  	return redirectCMD;
 	}
 }
 
@@ -258,12 +233,12 @@ Command* Parser::instantiate(Command* left, std::string redirectCom)
       
 }
 
-std::string Parser::redirector(int pos, std::string* cmd)
+std::string Parser::redirector(int pos, std::string cmd)
 {
-    
+/*    
     std::string redirectCom;
 
-    std::cout << "this is pos:" << pos << "\nand this is character at pos:" << cmd->at(pos) << std::endl;
+    std::cout << "this is pos:" << pos << "\nand this is character at pos:" << cmd.at(pos) << std::endl;
     std::cout << " this is cmd inside redirector at start:" << *cmd << std::endl;
     
     redirectCom = cmd->substr(pos);
@@ -272,5 +247,5 @@ std::string Parser::redirector(int pos, std::string* cmd)
     
     std::cout << "final check before exiting redirect syntax check\n:"; 
     std::cout << *cmd << std::endl << redirectCom << std::endl;
-    return redirectCom;
+    return redirectCom;*/
 }
