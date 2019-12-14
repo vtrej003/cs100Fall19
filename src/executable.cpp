@@ -42,7 +42,7 @@ Executable::Executable(std::string nFlag, std::string arg, bool isTest){
         args[1] = const_cast<char*>(flag.c_str());
         args[2] = const_cast<char*>(argList.c_str());
     }
-//    std::cout<<"\n\nflag:'" << args[1] <<"'\narg:'"<<args[2]<<"'\n\n";
+    std::cout<<"\n\nflag:'" << args[1] <<"'\narg:'"<<args[2]<<"'\n\n";
 }
 void Executable::execute()
 {
@@ -114,14 +114,14 @@ void Executable::testExecute(){
     if((!access((char*)args[2], F_OK))){
                 if (flag == "-e"){
                         std::cout<<"(True)\n";
-                        exit(1);
+                        exit(0);
                 }
                 else if (flag == "-d"){
                         struct stat path_stat;
                         stat(args[2],&path_stat);
                         if (S_ISDIR(path_stat.st_mode) == 1){
                                 std::cout<<"(True)\n";
-				exit(1);
+				exit(0);
                         }
                         else {
 			    std::cout<<"(False)\n";
@@ -134,7 +134,7 @@ void Executable::testExecute(){
                         stat(args[2],&path_stat);
                         if(S_ISREG(path_stat.st_mode) == 1){
                                 std::cout<<"(True)\n";
-                        	exit(1);
+                        	exit(0);
 			}
                         else {
 			    std::cout<<"(False)\n";
@@ -143,7 +143,7 @@ void Executable::testExecute(){
                 }
                 else {
 		    std::cout<<"(True)\n";
-		    exit(1);	
+		    exit(0);	
 		}
         }
     else{
