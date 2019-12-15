@@ -1,8 +1,11 @@
 #include "../header/parser.h"
 
+#define LOCATION __FILE__ + 73
+
 Command* Parser::parse(std::string strToParse){
 	std::string cmd = strToParse;
-	//std::vector<std::string> listOfConnectors({ "&&", "||", ";" });
+
+	std::string connectorList = "& | ;";
 	/*redirect strings*/
 	std::string invalidChar = "& | ; < > ( )";
 	std::string redirectList = "< > >>";
@@ -85,27 +88,24 @@ Command* Parser::parse(std::string strToParse){
 	   }
   }
 	std::cout<<"Connector found is '" << connector << "'\n";
-
-	  //if ( parenFound == true)
-	  //{
-	      //
- 	  //    leftCMD = new Parenthesis(
-	 // }
 	  if (parenFound == false)
 	  {
         	
 		std::size_t conPos = cmd.find(connector);//if a connector exists, find its pos
 
-		leftStrCMD = cmd.substr(0, conPos);
+		leftStrCMD = cmd.substr(0, conPos-1);
 		if (redirectorFound == true)
        		{
             	    std::cout << " entering redirector found\n";
 		    leftCMD = instantiateRedirect(leftStrCMD);
-		    leftCMD->execute();
+		    
+		    redirectorFound ==false; 
+		    std::cout << "exiting redirectorFOund\n:";    
 	        }
 		else
 		{
-		    std::cout << " did not enter redirector\n";
+                    
+	  	std::cout << " did not enter redirector\n" << LOCATION << __LINE__ << std::endl;
 		    std::size_t lExecPos = leftStrCMD.find(' ');
 	  	    std::size_t lArgPos = leftStrCMD.find_last_of(' ');
 		    if (leftStrCMD.back() != ' ')
@@ -214,6 +214,7 @@ Command* Parser::instantiateRedirect(std::string cmd)
     std::cout << "This is cmd:" << cmd << std::endl;
     if(inputRedirectPos == std::string::npos)//no input redirector 
     {
+	std::cout << "\nstepped into outputRedirect \n";
         exec = cmd.substr(0, execEndPos);
 	arg = cmd.substr(execEndPos, outputRedirectPos-execEndPos);
         innerFile = cmd.substr(outputRedirectPos+2);
@@ -223,7 +224,8 @@ Command* Parser::instantiateRedirect(std::string cmd)
            std::cout<<"Loading NULL as arg\n";
            arg = "NULL";
        }
-
+	
+	std::cout << "this is exec:" << exec << ":\nthis is arg:" << arg << ":\nthis is input:" << innerFile << ":" << std::endl;
 	com = new Executable(exec,arg );
         return new OutputRedirect(com, innerFile);
 
@@ -231,6 +233,7 @@ Command* Parser::instantiateRedirect(std::string cmd)
     else if(outputRedirectPos == std::string::npos)
     {
        //no output redirect
+       std::cout << "\nStepped into Input redirect \n";
        exec = cmd.substr(0, execEndPos);
        arg = cmd.substr(execEndPos, inputRedirectPos-execEndPos);
        innerFile = cmd.substr(inputRedirectPos+2);
@@ -241,19 +244,19 @@ Command* Parser::instantiateRedirect(std::string cmd)
            std::cout<<"Loading NULL as arg\n";
            arg = "NULL";
        }
- 	std::cout << "this is exec:" << exec << "this is arg:" << arg << "\nthis is input:" << innerFile << std::endl;
+ 	std::cout << "this is exec:" << exec << "this is arg:" << arg << "\nthis is input:" << innerFile << ":" << std::endl;
        com = new Executable(exec, arg);
        return new InputRedirect(com, innerFile);
     }
 else if (inputRedirectPos < outputRedirectPos)
     {
         //both exits   (>(<(executable)))
-        std::cout << "i am in the input direct less than output \n";
+        std::cout << "\nstepped into inputRedirect < outputRedirect \n";
 	
         exec = cmd.substr(0, execEndPos);
         arg = cmd.substr(execEndPos, inputRedirectPos-execEndPos);  //substr 0 to input <
         innerFile = cmd.substr(inputRedirectPos+2, (cmd.size() - outputRedirectPos-1));// substr < to >
-        outerFile = cmd.substr(outputRedirectPos+2); //substr < to end of line
+        outerFile = cmd.substr(outputRedirectPos+2, cmd.size()-1); //substr < to end of line
 	
         if (arg == " " || arg == "")
        {
@@ -261,7 +264,7 @@ else if (inputRedirectPos < outputRedirectPos)
            arg = "NULL";
        }
 
-	      std::cout << "Exec:"<< exec <<"\narg:" << arg << "\ninnerFile:"<< innerFile << ":\nouterFile:" << outerFile << ":\nInnerPOs:"<<inputRedirectPos <<"\nthis outerPos:"<< outputRedirectPos << std::endl;
+	      std::cout << "Exec:"<< exec <<":\narg:" << arg << ":\ninnerFile:"<< innerFile << ":\nouterFile:" << outerFile << ":\nInnerPOs:"<<inputRedirectPos <<"\nthis outerPos:"<< outputRedirectPos << std::endl;
 
         com = new Executable(exec, arg);
         redirectCom = new InputRedirect(com, innerFile);
@@ -270,7 +273,8 @@ else if (inputRedirectPos < outputRedirectPos)
     }
     else if(inputRedirectPos > outputRedirectPos)
     {
-        // both exits   (<(>(executable)))
+         std::cout << "\nstepped into inputRedirect > outputRedirect \n";
+         // both exits   (<(>(executable)))
         exec = cmd.substr(0, execEndPos);
         arg = cmd.substr(execEndPos, outputRedirectPos-execEndPos);
         
@@ -283,7 +287,7 @@ else if (inputRedirectPos < outputRedirectPos)
            arg = "NULL";
        }
 
-       std::cout << "Exec:"<< exec <<"\narg:" << arg << "\ninnerFile:"<< innerFile << "\nouterFile:" << outerFile << "InnerPOs:"<<inputRedirectPos <<"\nthis outerPos:"<< outputRedirectPos << std::endl;          
+       std::cout << "Exec:"<< exec <<":\narg:" << arg << ":\ninnerFile:"<< innerFile << ":\nouterFile:" << outerFile << "InnerPOs:"<<inputRedirectPos <<"\nthis outerPos:"<< outputRedirectPos << std::endl;          
   
         com = new Executable(exec, arg);
 
@@ -294,4 +298,3 @@ else if (inputRedirectPos < outputRedirectPos)
 
 
 }
- 

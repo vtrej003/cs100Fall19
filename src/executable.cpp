@@ -46,7 +46,7 @@ Executable::Executable(std::string nFlag, std::string arg, bool isTest){
 }
 void Executable::execute()
 {
- //   std::cout<<"Exectuting && object:'"<<cmd<< "' '"<<args[0]<<"' '"<<args[1]<<"'\n";
+   // std::cout<<"Exectuting && object:'"<<cmd<< "' '"<<args[0]<<"' '"<<args[1]<<"'\n";
     std::string connector = Command::getConnector();
     std::cout<<"**Using connector: '" <<connector<<"'\n";
     std::cout<<"Executable token is set to " <<Command::mExToken<<std::endl;

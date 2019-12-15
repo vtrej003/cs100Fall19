@@ -18,6 +18,7 @@ void InputRedirect::execute()
     if(fdin < 0)
     {
         std::cout << " error in input redirect call\n";
+        std:: cout << " this is what open fileName is:" << fileName << ":" << std:: endl;
 	exit(1);
     }
     else
