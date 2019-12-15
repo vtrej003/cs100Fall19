@@ -105,7 +105,7 @@ Command* Parser::parse(std::string strToParse){
 		else
 		{
                     
-	  	std::cout << " did not enter redirector\n" << LOCATION << __LINE__ << std::endl;
+		    std::cout << " did not enter redirector\n" << LOCATION << __LINE__ << std::endl;
 		    std::size_t lExecPos = leftStrCMD.find(' ');
 	  	    std::size_t lArgPos = leftStrCMD.find_last_of(' ');
 		    if (leftStrCMD.back() != ' ')
@@ -125,14 +125,8 @@ Command* Parser::parse(std::string strToParse){
 			std::cout<<"Loading NULL as arg\n";
 			arg = "NULL";
 		    }   
-		    std::cout<<"This is exec: '" << exec<<"'\n";
-		    std::cout<<"This is arg: '" << arg<<"'\n";
-		    if (arg.back() == ' '){
-			//std::cout<<"\n\n\n";
-			arg.pop_back();	
-			std::cout<< "This is arg: '" << arg<<"'\n";
-
-		    }
+		    std::cout<<"This is exec:" << exec<<":\n";
+		    std::cout<<"This is arg:" << arg<<":\n";
 		    leftCMD = (instantiate(exec, arg));
 		}		
         	if (connectorFound == true)
