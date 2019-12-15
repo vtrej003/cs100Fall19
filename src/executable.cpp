@@ -46,7 +46,7 @@ Executable::Executable(std::string nFlag, std::string arg, bool isTest){
 }
 void Executable::execute()
 {
-    std::cout<<"Exectuting && object:'"<<cmd<< "' '"<<args[0]<<"' '"<<args[1]<<"'\n";
+ //   std::cout<<"Exectuting && object:'"<<cmd<< "' '"<<args[0]<<"' '"<<args[1]<<"'\n";
     std::string connector = Command::getConnector();
     std::cout<<"**Using connector: '" <<connector<<"'\n";
     std::cout<<"Executable token is set to " <<Command::mExToken<<std::endl;
@@ -73,7 +73,7 @@ void Executable::execute()
     if(Command::mExToken == true){
 	std::cout<<"Execution token is set to true" <<"\n";
 	if (connector == "&&"){
-	    std::cout<<"Exectuting && object:'"<<cmd<< "' '"<<args[0]<<"' '"<<args[1]<<"'\n";
+//	    std::cout<<"Exectuting && object:'"<<cmd<< "' '"<<args[0]<<"' '"<<args[1]<<"'\n";
 	    if(mIsTest == true){
 		testExecute(); 
 		mIsTest = false;
@@ -92,11 +92,11 @@ void Executable::execute()
     }
     else if ( Command::mExToken == false){
 	if (connector == "&&"){ // the last executable failed and we don't want to execute
-	 std::cout<<"*Exectuting && object:'"<<cmd<< "' '"<<args[0]<<"' '"<<args[1]<<"'\n";
+//	 std::cout<<"*Exectuting && object:'"<<cmd<< "' '"<<args[0]<<"' '"<<args[1]<<"'\n";
 	    exit(1);
 	}
 	else { // connector is ||
-	std::cout<<"*Exectuting || object:'"<<cmd<< "' '"<<args[0]<<"' '"<<args[1]<<"'\n";
+//	std::cout<<"*Exectuting || object:'"<<cmd<< "' '"<<args[0]<<"' '"<<args[1]<<"'\n";
 	    if(mIsTest == true){testExecute(); mIsTest = false;}
             else{
 		Command::mExToken = true;
