@@ -127,6 +127,12 @@ Command* Parser::parse(std::string strToParse){
 		    }   
 		    std::cout<<"This is exec: '" << exec<<"'\n";
 		    std::cout<<"This is arg: '" << arg<<"'\n";
+		    if (arg.back() == ' '){
+			//std::cout<<"\n\n\n";
+			arg.pop_back();	
+			std::cout<< "This is arg: '" << arg<<"'\n";
+
+		    }
 		    leftCMD = (instantiate(exec, arg));
 		}		
         	if (connectorFound == true)
