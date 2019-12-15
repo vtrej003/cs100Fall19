@@ -23,6 +23,6 @@ class Executable : public Command
 	std::string flag;
 	std::string execName;
 	char* cmd;
-	char* args[3];
+	std::vector<char*> args;
 };
 #endif //__EXECUTABLE_H__

@@ -15,16 +15,61 @@ Executable::Executable(std::string exec, std::string arg)
 	std::cout<<"Only exec loaded\n";
 	execName = exec;
 	cmd = const_cast<char*>(execName.c_str());
-	args[0] = const_cast<char*>(execName.c_str());
+	args.push_back(const_cast<char*>(execName.c_str()));
+	std::cout<<"SUP\n";
     }
     else{
 	std::cout<<"Exec and arg loaded\n";
     	execName = exec;
     	argList = arg;
-    	cmd = const_cast<char*>(execName.c_str());
-    	args[0] = const_cast<char*>(execName.c_str());
-    	args[1] = const_cast<char*>(argList.c_str());
+//	std::cout<<"Arg parsing: '" << argList<<"'\n";
+	args.push_back(const_cast<char*>(execName.c_str()));
+	//args.push_back(const_cast<char*>(execName.c_str()));
+	args.push_back(const_cast<char*>(argList.c_str()));
+	/*do{
+		args.push_back(const_cast<char*>(execName.c_str()));
+		std::string currentArg;
+		bool whitespaceFound = true;
+		std::size_t argEndPos = argList.find(' ');
+		int argEnd = argEndPos;
+		if (argEndPos == std::string::npos){
+			std::cout << "No whitespace found\n";
+			argEnd = argList.back();
+			whitespaceFound = false;
+                }
+		currentArg = argList.substr(0, argEndPos);
+		std::cout<<"Loading arg: '"<<currentArg<<"'\n";
+		args.push_back(const_cast<char*>(currentArg.c_str()));
+		argList.erase(0, argEnd+1);
+		if (whitespaceFound == false){
+			argList.erase(0, argEnd);
+		}
+		std::cout<<"Arg left to parse is: '"<<argList<<"'\n";		
+	}while(argList.size()!=0);*/
+	args.push_back(NULL);	
     }
+	/*if (arg == "a-z A-Z"){
+		std::cout << "We have a tr exec\n";
+		std::string tr1 = "a-z";
+		std::string tr2 = "A-Z";
+		args[0] = const_cast<char*>(execName.c_str());
+        	args[1] = const_cast<char*>(tr1.c_str());
+		args[2] = const_cast<char*>(tr2.c_str());
+	}
+	else if (arg == "A-Z a-z"){
+		std::cout << "*We have a tr exec\n";
+                std::string tr1 = "a-z";
+                std::string tr2 = "A-Z";
+                args[0] = const_cast<char*>(execName.c_str());
+                args[1] = const_cast<char*>(tr2.c_str());
+                args[2] = const_cast<char*>(tr1.c_str());
+        }*/
+	//else{
+    	//	cmd = const_cast<char*>(execName.c_str());
+    	//	args[0] = const_cast<char*>(execName.c_str());
+    	//	args[1] = const_cast<char*>(argList.c_str());
+    	//}
+    
 }
 
 Executable::Executable(std::string nFlag, std::string arg, bool isTest){
@@ -47,6 +92,7 @@ Executable::Executable(std::string nFlag, std::string arg, bool isTest){
 void Executable::execute()
 {
    // std::cout<<"Exectuting && object:'"<<cmd<< "' '"<<args[0]<<"' '"<<args[1]<<"'\n";
+    char** CMD = &args[0];
     std::string connector = Command::getConnector();
     std::cout<<"**Using connector: '" <<connector<<"'\n";
     std::cout<<"Executable token is set to " <<Command::mExToken<<std::endl;
@@ -59,7 +105,7 @@ void Executable::execute()
 	}
 	else{ 
 	      	Command::mExToken = true;
-		execvp(cmd, args);
+		execvp(CMD[0], CMD);
 		std::cout<<"Command does not exist\n";
 		exit(1);
 	}	
@@ -67,7 +113,7 @@ void Executable::execute()
     else if(connector == ";"){
 	 if(mIsTest == true){testExecute(); mIsTest = false;}
          else{
-              execvp(cmd, args);
+              execvp(CMD[0], CMD);
          }	
     }
     if(Command::mExToken == true){
@@ -80,7 +126,7 @@ void Executable::execute()
 	    }
 	    else{    
 		Command::mExToken = true;
-                execvp(cmd, args);
+                execvp(CMD[0], CMD);
 		std::cout<<"ex Command does not exist\n";
 		exit(1);
             }		
@@ -100,7 +146,7 @@ void Executable::execute()
 	    if(mIsTest == true){testExecute(); mIsTest = false;}
             else{
 		Command::mExToken = true;
-                execvp(cmd, args);
+                execvp(CMD[0], CMD);
 		std::cout<<"Command does not exist\n";
 		//Command::mExToken = false;
 		exit (1);		
