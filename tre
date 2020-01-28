@@ -1,0 +1,38 @@
+void parser()
+{
+    std::string cmd = "test -e rshell  echo “rshell executable missing, check submission instruction section of the specifications”";
+
+    //step one seperate from commands from connector
+    std::string leftCom, rightCom, connector;// 1.commands and connector
+    std::string leftExec, rightExec;//2.execs
+    std::string leftArg, rightArg;//3 args
+    //substring left command
+    std::size_t startOfCon = cmd.find(""); 
+    std::cout << "pos from start: " << startOfCon << std::endl;      // position of "live" in str
+    leftCom = cmd.substr(0, startOfCon);
+
+    //substring right command
+    std::size_t endOfCon = cmd.find_last_of("||");
+    std::cout << "position of last of: " << endOfCon << std::endl;
+
+    rightCom = cmd.substr(endOfCon+2);
+
+    //connector
+    connector = cmd.substr(startOfCon, endOfCon-startOfCon+1);
+
+    //parse left exec and alg
+    std::size_t lExecPos = leftCom.find(" ");
+    leftExec = leftCom.substr(0,lExecPos);
+    leftArg = leftCom.substr(lExecPos+1);
+
+    //parse right exec alg
+    std::size_t rExecEndPos = rightCom.find(" ");
+ 
+    std::cout << "what is rexecpos:" << rExecEndPos << std::endl;
+    rightExec = rightCom.substr(0,rExecEndPos);
+    rightArg = rightCom.substr(rExecEndPos);
+
+    std::cout << "Left Exec:" << leftExec << "\nLeft Alg:" << leftArg << std::endl;
+    std::cout << "Connector is:" << connector << std::endl;
+    std::cout << "Right Exec:" << rightExec << "\nRight Alg:" << rightArg << std::endl;
+}

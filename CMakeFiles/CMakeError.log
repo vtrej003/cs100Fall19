@@ -1,0 +1,51 @@
+Determining if the pthread_create exist failed with the following output:
+Change Dir: /home/csmajs/vtrej003/assignment-andres_vincent_cs_100_assignment/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/gmake cmTC_af145/fast 
+/usr/bin/gmake -f CMakeFiles/cmTC_af145.dir/build.make CMakeFiles/cmTC_af145.dir/build
+gmake[1]: Entering directory `/home/csmajs/vtrej003/assignment-andres_vincent_cs_100_assignment/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_af145.dir/CheckSymbolExists.c.o
+/usr/bin/cc    -o CMakeFiles/cmTC_af145.dir/CheckSymbolExists.c.o   -c /home/csmajs/vtrej003/assignment-andres_vincent_cs_100_assignment/CMakeFiles/CMakeTmp/CheckSymbolExists.c
+Linking C executable cmTC_af145
+/usr/bin/cmake3 -E cmake_link_script CMakeFiles/cmTC_af145.dir/link.txt --verbose=1
+/usr/bin/cc      -rdynamic CMakeFiles/cmTC_af145.dir/CheckSymbolExists.c.o  -o cmTC_af145 
+CMakeFiles/cmTC_af145.dir/CheckSymbolExists.c.o: In function `main':
+CheckSymbolExists.c:(.text+0x16): undefined reference to `pthread_create'
+collect2: error: ld returned 1 exit status
+gmake[1]: *** [cmTC_af145] Error 1
+gmake[1]: Leaving directory `/home/csmajs/vtrej003/assignment-andres_vincent_cs_100_assignment/CMakeFiles/CMakeTmp'
+gmake: *** [cmTC_af145/fast] Error 2
+
+File /home/csmajs/vtrej003/assignment-andres_vincent_cs_100_assignment/CMakeFiles/CMakeTmp/CheckSymbolExists.c:
+/* */
+#include <pthread.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef pthread_create
+  return ((int*)(&pthread_create))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+
+Determining if the function pthread_create exists in the pthreads failed with the following output:
+Change Dir: /home/csmajs/vtrej003/assignment-andres_vincent_cs_100_assignment/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/gmake cmTC_e86e4/fast 
+/usr/bin/gmake -f CMakeFiles/cmTC_e86e4.dir/build.make CMakeFiles/cmTC_e86e4.dir/build
+gmake[1]: Entering directory `/home/csmajs/vtrej003/assignment-andres_vincent_cs_100_assignment/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_e86e4.dir/CheckFunctionExists.c.o
+/usr/bin/cc   -DCHECK_FUNCTION_EXISTS=pthread_create   -o CMakeFiles/cmTC_e86e4.dir/CheckFunctionExists.c.o   -c /usr/share/cmake3/Modules/CheckFunctionExists.c
+Linking C executable cmTC_e86e4
+/usr/bin/cmake3 -E cmake_link_script CMakeFiles/cmTC_e86e4.dir/link.txt --verbose=1
+/usr/bin/cc  -DCHECK_FUNCTION_EXISTS=pthread_create    -rdynamic CMakeFiles/cmTC_e86e4.dir/CheckFunctionExists.c.o  -o cmTC_e86e4 -lpthreads 
+/usr/bin/ld: cannot find -lpthreads
+collect2: error: ld returned 1 exit status
+gmake[1]: *** [cmTC_e86e4] Error 1
+gmake[1]: Leaving directory `/home/csmajs/vtrej003/assignment-andres_vincent_cs_100_assignment/CMakeFiles/CMakeTmp'
+gmake: *** [cmTC_e86e4/fast] Error 2
+
+
